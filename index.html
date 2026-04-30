@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noir Burgers - Delivery Premium</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>🍔 Noir Burgers</h1>
+  </div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#destaques">Destaques</a>
+    <a href="#avaliacoes">Avaliações</a>
+    <a href="#contato">Contato</a>
+    <span id="status-loja" style="color: #aaa; font-size: 0.9rem; margin-left: 20px;"></span>
+  </nav>
+
+  <div class="header-right">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Buscar produto..." class="search-box">
+      <button onclick="buscarProduto()" class="search-btn">🔍</button>
+    </div>
+    <button class="btn-user" onclick="abrirUltimoPedido()" title="Seu último pedido">🕐</button>
+    <button class="btn-user" onclick="abrirRastreamento()" title="Rastrear pedidos">📦</button>
+    <button class="btn-user" onclick="abrirLogin()">👤 Login</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <video autoplay muted loop class="bg-video">
+    <source src="video.mp4" type="video/mp4">
+  </video>
+
+  <div class="overlay"></div>
+
+  <div class="hero-content">
+    <h2>Noir: Onde Cada Mordida<br>é uma <span>Obra-Prima</span></h2>
+    <p>Experiência gastronômica premium direto na sua casa</p>
+    <button class="btn" onclick="document.getElementById('menu').scrollIntoView({behavior: 'smooth'})">Pedir agora</button>
+  </div>
+</section>
+
+<!-- DESTAQUES/RECOMENDAÇÕES -->
+<section id="destaques" class="section destaques-section">
+  <h2>⭐ Destaques & Ofertas</h2>
+  
+  <div class="grid">
+    <div class="card destaque">
+      <div class="destaque-badge">🔥 -15%</div>
+      <img src="food1.jpg" alt="Smash Burger Premium" loading="lazy">
+      <h3>Smash Burger Premium</h3>
+      <div class="rating">⭐⭐⭐⭐⭐ (428 avaliações)</div>
+      <p class="preco-original">R$ 25,00</p>
+      <p class="preco">R$ 21,25</p>
+      <small>Pão brioche, carne smash, cheddar e molho especial</small>
+      <button onclick="addCarrinho('Smash Burger Premium', 21.25, 5)">Adicionar</button>
+    </div>
+
+    <div class="card destaque">
+      <div class="destaque-badge">⚡ Novo</div>
+      <img src="food2.jpg" alt="X-Burguer Gourmet" loading="lazy">
+      <h3>X-Burguer Gourmet</h3>
+      <div class="rating">⭐⭐⭐⭐⭐ (156 avaliações)</div>
+      <p class="preco-original">R$ 36,00</p>
+      <p class="preco">R$ 32,00</p>
+      <small>Carne, queijo artesanal, alface e molho da casa</small>
+      <button onclick="addCarrinho('X-Burguer Gourmet', 32, 5)">Adicionar</button>
+    </div>
+
+    <div class="card destaque">
+      <div class="destaque-badge">❤️ Popular</div>
+      <img src="food5.jpg" alt="Combo Deluxe" loading="lazy">
+      <h3>Combo Deluxe</h3>
+      <div class="rating">⭐⭐⭐⭐ (892 avaliações)</div>
+      <p class="preco-original">R$ 45,00</p>
+      <p class="preco">R$ 39,99</p>
+      <small>2 Burgers + fritas + refrigerante + sobremesa</small>
+      <button onclick="addCarrinho('Combo Deluxe', 39.99, 5)">Adicionar</button>
+    </div>
+
+    <div class="card destaque">
+      <div class="destaque-badge">🌟 Melhor</div>
+      <img src="food7.jpg" alt="Mega Burger" loading="lazy">
+      <h3>Mega Burger</h3>
+      <div class="rating">⭐⭐⭐⭐⭐ (756 avaliações)</div>
+      <p class="preco-original">R$ 38,00</p>
+      <p class="preco">R$ 31,80</p>
+      <small>Triplo de carne, queijo e bacon crocante</small>
+      <button onclick="addCarrinho('Mega Burger', 31.80, 5)">Adicionar</button>
+    </div>
+
+    <div class="card destaque">
+      <div class="destaque-badge">💥 Hot</div>
+      <img src="food8.jpg" alt="Burger Picante" loading="lazy">
+      <h3>Burger Picante</h3>
+      <div class="rating">⭐⭐⭐⭐ (523 avaliações)</div>
+      <p class="preco-original">R$ 29,00</p>
+      <p class="preco">R$ 24,65</p>
+      <small>Burger com pimenta, jalapeno e molho spicy</small>
+      <button onclick="addCarrinho('Burger Picante', 24.65, 5)">Adicionar</button>
+    </div>
+
+    <div class="card destaque">
+      <div class="destaque-badge">👑 Premium</div>
+      <img src="food9.jpg" alt="Burger Trufa" loading="lazy">
+      <h3>Burger Trufa</h3>
+      <div class="rating">⭐⭐⭐⭐⭐ (645 avaliações)</div>
+      <p class="preco-original">R$ 55,00</p>
+      <p class="preco">R$ 44,00</p>
+      <small>Carne wagyu com molho de trufa e queijo artesanal</small>
+      <button onclick="addCarrinho('Burger Trufa', 44, 5)">Adicionar</button>
+    </div>
+  </div>
+</section>
+
+<!-- FILTROS & MENU -->
+<section id="menu" class="section">
+  <h2>📋 Cardápio Completo</h2>
+  
+  <div class="filter-container">
+    <button class="filter-btn active" onclick="filtrarCategoria('todos')">Todos</button>
+    <button class="filter-btn" onclick="filtrarCategoria('burgers')">🍔 Burgers</button>
+    <button class="filter-btn" onclick="filtrarCategoria('fritas')">🍟 Fritas</button>
+    <button class="filter-btn" onclick="filtrarCategoria('bebidas')">🥤 Bebidas</button>
+    <button class="filter-btn" onclick="filtrarCategoria('sobremesas')">🍰 Sobremesas</button>
+    <button class="filter-btn" onclick="filtrarCategoria('acai')">🫐 Açaí</button>
+    <button class="filter-btn" onclick="filtrarCategoria('acompanhamentos')">🍗 Acompanhamentos</button>
+    <button class="filter-btn" onclick="filtrarCategoria('promocoes')">🎁 Promoções</button>
+  </div>
+
+  <!-- BURGERS -->
+  <div id="categoria-burgers" class="categoria">
+    <h3 class="categoria-title">🍔 Burgers Especiais</h3>
+    <div class="grid">
+
+      <div class="card" data-category="burgers">
+        <img src="food1.jpg" alt="Smash Burger" loading="lazy">
+        <h3>Smash Burger</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (428)</div>
+        <p>R$ 25,00</p>
+        <small>Pão brioche, carne smash, cheddar e molho especial</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Smash Burger', 25)">❤️</button>
+          <button onclick="addCarrinho('Smash Burger', 25, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="burgers">
+        <img src="food2.jpg" alt="X-Burguer" loading="lazy">
+        <h3>X-Burguer</h3>
+        <div class="rating">⭐⭐⭐⭐ (312)</div>
+        <p>R$ 30,00</p>
+        <small>Carne, queijo, alface, tomate e molho da casa</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('X-Burguer', 30)">❤️</button>
+          <button onclick="addCarrinho('X-Burguer', 30, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="burgers">
+        <img src="food3.jpg" alt="X-Bacon" loading="lazy">
+        <h3>X-Bacon</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (567)</div>
+        <p>R$ 28,00</p>
+        <small>Carne, bacon crocante e queijo derretido</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('X-Bacon', 28)">❤️</button>
+          <button onclick="addCarrinho('X-Bacon', 28, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="burgers">
+        <img src="food4.jpg" alt="X-Tudo" loading="lazy">
+        <h3>X-Tudo</h3>
+        <div class="rating">⭐⭐⭐⭐ (189)</div>
+        <p>R$ 32,00</p>
+        <small>Hambúrguer completo com todos os adicionais</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('X-Tudo', 32)">❤️</button>
+          <button onclick="addCarrinho('X-Tudo', 32, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="burgers">
+        <img src="food5.jpg" alt="Combo Burger" loading="lazy">
+        <h3>Combo Burger</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (892)</div>
+        <p>R$ 39,00</p>
+        <small>Burger + fritas + refrigerante</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Combo Burger', 39)">❤️</button>
+          <button onclick="addCarrinho('Combo Burger', 39, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="burgers">
+        <img src="food6.jpg" alt="Hambúrguer Duplo" loading="lazy">
+        <h3>Hambúrguer Duplo</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (734)</div>
+        <p>R$ 35,00</p>
+        <small>Dois hambúrgueres, queijo duplo e molho especial</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Hambúrguer Duplo', 35)">❤️</button>
+          <button onclick="addCarrinho('Hambúrguer Duplo', 35, 5)">Adicionar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FRITAS -->
+  <div id="categoria-fritas" class="categoria">
+    <h3 class="categoria-title">🍟 Fritas & Acompanhamentos</h3>
+    <div class="grid">
+
+      <div class="card" data-category="fritas">
+        <img src="fritas1.jpg" alt="Batata Frita" loading="lazy">
+        <h3>Batata Frita</h3>
+        <div class="rating">⭐⭐⭐⭐ (245)</div>
+        <p>R$ 12,00</p>
+        <small>Porção crocante e sequinha</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Batata Frita', 12)">❤️</button>
+          <button onclick="addCarrinho('Batata Frita', 12, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="fritas">
+        <img src="fritas2.jpg" alt="Batata com Cheddar" loading="lazy">
+        <h3>Batata com Cheddar</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (456)</div>
+        <p>R$ 15,00</p>
+        <small>Batata coberta com cheddar cremoso</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Batata com Cheddar', 15)">❤️</button>
+          <button onclick="addCarrinho('Batata com Cheddar', 15, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="fritas">
+        <img src="fritas3.jpg" alt="Batata com Bacon" loading="lazy">
+        <h3>Batata com Bacon</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (623)</div>
+        <p>R$ 18,00</p>
+        <small>Batata com bacon crocante</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Batata com Bacon', 18)">❤️</button>
+          <button onclick="addCarrinho('Batata com Bacon', 18, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="fritas">
+        <img src="fritas4.jpg" alt="Batata Suprema" loading="lazy">
+        <h3>Batata Suprema</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (789)</div>
+        <p>R$ 22,00</p>
+        <small>Batata completa com cheddar e bacon</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Batata Suprema', 22)">❤️</button>
+          <button onclick="addCarrinho('Batata Suprema', 22, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="fritas">
+        <img src="fritas5.jpg" alt="Batata Rústica" loading="lazy">
+        <h3>Batata Rústica com Alho</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (334)</div>
+        <p>R$ 13,00</p>
+        <small>Batata assada com alho roxa e temperos artesanais</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Batata Rústica com Alho', 13)">❤️</button>
+          <button onclick="addCarrinho('Batata Rústica com Alho', 13, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="fritas">
+        <img src="fritas6.jpg" alt="Batata Doce Frita" loading="lazy">
+        <h3>Batata Doce Frita</h3>
+        <div class="rating">⭐⭐⭐⭐ (456)</div>
+        <p>R$ 14,00</p>
+        <small>Batata doce crocante com canela e mel</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Batata Doce Frita', 14)">❤️</button>
+          <button onclick="addCarrinho('Batata Doce Frita', 14, 4)">Adicionar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BEBIDAS -->
+  <div id="categoria-bebidas" class="categoria">
+    <h3 class="categoria-title">🥤 Bebidas</h3>
+    <div class="grid">
+
+      <div class="card" data-category="bebidas">
+        <img src="bebida1.jpg" alt="Refrigerante 2L" loading="lazy">
+        <h3>Refrigerante 2L</h3>
+        <div class="rating">⭐⭐⭐⭐ (156)</div>
+        <p>R$ 10,00</p>
+        <small>Coca-Cola, Guaraná ou Fanta</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Refrigerante 2L', 10)">❤️</button>
+          <button onclick="addCarrinho('Refrigerante 2L', 10, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="bebidas">
+        <img src="bebida2.jpg" alt="Suco Natural" loading="lazy">
+        <h3>Suco Natural</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (234)</div>
+        <p>R$ 8,00</p>
+        <small>Suco de laranja, uva ou melancia fresco</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Suco Natural', 8)">❤️</button>
+          <button onclick="addCarrinho('Suco Natural', 8, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="bebidas">
+        <img src="bebida3.jpg" alt="Cerveja Artesanal" loading="lazy">
+        <h3>Cerveja Artesanal</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (512)</div>
+        <p>R$ 14,00</p>
+        <small>350ml - Várias marcas disponíveis</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Cerveja Artesanal', 14)">❤️</button>
+          <button onclick="addCarrinho('Cerveja Artesanal', 14, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="bebidas">
+        <img src="bebida4.jpg" alt="Água com Gás" loading="lazy">
+        <h3>Água com Gás</h3>
+        <div class="rating">⭐⭐⭐⭐ (98)</div>
+        <p>R$ 5,00</p>
+        <small>Água mineral com gás 1.5L</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Água com Gás', 5)">❤️</button>
+          <button onclick="addCarrinho('Água com Gás', 5, 3)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="bebidas">
+        <img src="suco1.jpg" alt="Suco de Maçã" loading="lazy">
+        <h3>Suco Natural de Maçã</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (167)</div>
+        <p>R$ 10,00</p>
+        <small>Suco 100% natural de maçã fresca - 500ml</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Suco Natural de Maçã', 10)">❤️</button>
+          <button onclick="addCarrinho('Suco Natural de Maçã', 10, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="bebidas">
+        <img src="suco2.jpg" alt="Suco de Melancia" loading="lazy">
+        <h3>Suco Natural de Melancia</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (189)</div>
+        <p>R$ 9,00</p>
+        <small>Suco refrescante de melancia - 500ml</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Suco Natural de Melancia', 9)">❤️</button>
+          <button onclick="addCarrinho('Suco Natural de Melancia', 9, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="bebidas">
+        <img src="suco3.jpg" alt="Suco Green" loading="lazy">
+        <h3>Suco Green Premium</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (234)</div>
+        <p>R$ 13,00</p>
+        <small>Blend de frutas vermelhas com frutas e verduras - 500ml</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Suco Green Premium', 13)">❤️</button>
+          <button onclick="addCarrinho('Suco Green Premium', 13, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="bebidas">
+        <img src="gengibre.jpg" alt="Suco de Gengibre" loading="lazy">
+        <h3>Suco com Gengibre e Limão</h3>
+        <div class="rating">⭐⭐⭐⭐ (112)</div>
+        <p>R$ 11,00</p>
+        <small>Bebida natural com gengibre fresco e limão - 500ml</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Suco com Gengibre e Limão', 11)">❤️</button>
+          <button onclick="addCarrinho('Suco com Gengibre e Limão', 11, 4)">Adicionar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ACOMPANHAMENTOS -->
+  <div id="categoria-acompanhamentos" class="categoria">
+    <h3 class="categoria-title">🍗 Acompanhamentos & Complementos</h3>
+    <div class="grid">
+
+      <div class="card" data-category="acompanhamentos">
+        <img src="aneis.jpg" alt="Anéis de Cebola" loading="lazy">
+        <h3>Anéis de Cebola Crocantes</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (289)</div>
+        <p>R$ 16,00</p>
+        <small>Anéis de cebola empanados e fritos até ficar crocante</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Anéis de Cebola Crocantes', 16)">❤️</button>
+          <button onclick="addCarrinho('Anéis de Cebola Crocantes', 16, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acompanhamentos">
+        <img src="nuggets.jpg" alt="Nuggets de Frango" loading="lazy">
+        <h3>Nuggets de Frango</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (412)</div>
+        <p>R$ 18,00</p>
+        <small>6 peças crocantes e suculentas</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Nuggets de Frango', 18)">❤️</button>
+          <button onclick="addCarrinho('Nuggets de Frango', 18, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acompanhamentos">
+        <img src="asas.jpg" alt="Asas de Frango" loading="lazy">
+        <h3>Asas de Frango à Búfalo</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (367)</div>
+        <p>R$ 20,00</p>
+        <small>6 asas com molho búfalo apimentado</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Asas de Frango à Búfalo', 20)">❤️</button>
+          <button onclick="addCarrinho('Asas de Frango à Búfalo', 20, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acompanhamentos">
+        <img src="tiras.jpg" alt="Tiras de Frango" loading="lazy">
+        <h3>Tiras de Frango Crocantes</h3>
+        <div class="rating">⭐⭐⭐⭐ (298)</div>
+        <p>R$ 19,00</p>
+        <small>Tiras de filé empanadas e crocantes - 5 peças</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Tiras de Frango Crocantes', 19)">❤️</button>
+          <button onclick="addCarrinho('Tiras de Frango Crocantes', 19, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acompanhamentos">
+        <img src="popcorn.jpg" alt="Popcorn de Frango" loading="lazy">
+        <h3>Popcorn de Frango</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (345)</div>
+        <p>R$ 17,00</p>
+        <small>Peças pequenas crocantes - perfeito para acompanhar</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Popcorn de Frango', 17)">❤️</button>
+          <button onclick="addCarrinho('Popcorn de Frango', 17, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acompanhamentos">
+        <img src="linguica.jpg" alt="Linguiça Calabresa" loading="lazy">
+        <h3>Linguiça Calabresa Grelhada</h3>
+        <div class="rating">⭐⭐⭐⭐ (201)</div>
+        <p>R$ 15,00</p>
+        <small>Linguiça artesanal grelhada com alho</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Linguiça Calabresa Grelhada', 15)">❤️</button>
+          <button onclick="addCarrinho('Linguiça Calabresa Grelhada', 15, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acompanhamentos">
+        <img src="batata-ondulada.jpg" alt="Batata Ondulada" loading="lazy">
+        <h3>Batata Ondulada Crocante</h3>
+        <div class="rating">⭐⭐⭐⭐ (156)</div>
+        <p>R$ 14,00</p>
+        <small>Batata ondulada sequinha com tempero especial</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Batata Ondulada Crocante', 14)">❤️</button>
+          <button onclick="addCarrinho('Batata Ondulada Crocante', 14, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acompanhamentos">
+        <img src="calabresa.jpg" alt="Batata com Calabresa" loading="lazy">
+        <h3>Batata com Calabresa</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (223)</div>
+        <p>R$ 19,00</p>
+        <small>Batata frita coberta com calabresa grelhada e queijo</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Batata com Calabresa', 19)">❤️</button>
+          <button onclick="addCarrinho('Batata com Calabresa', 19, 5)">Adicionar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SOBREMESAS -->
+  <div id="categoria-sobremesas" class="categoria">
+    <h3 class="categoria-title">🍰 Sobremesas</h3>
+    <div class="grid">
+
+      <div class="card" data-category="sobremesas">
+        <img src="sobremesa1.jpg" alt="Brownie Quente" loading="lazy">
+        <h3>Brownie Quente</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (445)</div>
+        <p>R$ 16,00</p>
+        <small>Brownie com calda de chocolate quente</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Brownie Quente', 16)">❤️</button>
+          <button onclick="addCarrinho('Brownie Quente', 16, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="sobremesas">
+        <img src="sobremesa2.jpg" alt="Milkshake" loading="lazy">
+        <h3>Milkshake</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (678)</div>
+        <p>R$ 14,00</p>
+        <small>Diversos sabores - chocolate, morango, baunilha</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Milkshake', 14)">❤️</button>
+          <button onclick="addCarrinho('Milkshake', 14, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="sobremesas">
+        <img src="sobremesa3.jpg" alt="Sorvete Premium" loading="lazy">
+        <h3>Sorvete Premium</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (823)</div>
+        <p>R$ 12,00</p>
+        <small>3 sabores à escolha - pote 500ml</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Sorvete Premium', 12)">❤️</button>
+          <button onclick="addCarrinho('Sorvete Premium', 12, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="sobremesas">
+        <img src="sobremesa4.jpg" alt="Cheesecake" loading="lazy">
+        <h3>Cheesecake</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (567)</div>
+        <p>R$ 18,00</p>
+        <small>Porção generosa de cheesecake cremoso</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Cheesecake', 18)">❤️</button>
+          <button onclick="addCarrinho('Cheesecake', 18, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="sobremesas">
+        <img src="pudim.jpg" alt="Pudim de Leite Condensado" loading="lazy">
+        <h3>Pudim de Leite Condensado</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (612)</div>
+        <p>R$ 15,00</p>
+        <small>Pudim cremoso com calda de caramelo</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Pudim de Leite Condensado', 15)">❤️</button>
+          <button onclick="addCarrinho('Pudim de Leite Condensado', 15, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="sobremesas">
+        <img src="beijinho.jpg" alt="Beijinhos de Chocolate" loading="lazy">
+        <h3>Beijinhos de Chocolate</h3>
+        <div class="rating">⭐⭐⭐⭐ (345)</div>
+        <p>R$ 12,00</p>
+        <small>5 beijinhos de chocolate com calda de chocolate</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Beijinhos de Chocolate', 12)">❤️</button>
+          <button onclick="addCarrinho('Beijinhos de Chocolate', 12, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="sobremesas">
+        <img src="tiramissu.jpg" alt="Tiramissu" loading="lazy">
+        <h3>Tiramissu Italiano</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (489)</div>
+        <p>R$ 20,00</p>
+        <small>Tradicional tiramissu com mascarpone e café</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Tiramissu Italiano', 20)">❤️</button>
+          <button onclick="addCarrinho('Tiramissu Italiano', 20, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="sobremesas">
+        <img src="pavê.jpg" alt="Pavê de Chocolate" loading="lazy">
+        <h3>Pavê de Chocolate</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (578)</div>
+        <p>R$ 17,00</p>
+        <small>Pavê clássico com biscoito, chocolate e calda</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Pavê de Chocolate', 17)">❤️</button>
+          <button onclick="addCarrinho('Pavê de Chocolate', 17, 5)">Adicionar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROMOÇÕES -->
+  <div id="categoria-promocoes" class="categoria">
+    <h3 class="categoria-title">🎁 Combos & Promoções</h3>
+    <div class="grid">
+
+      <div class="card promocao" data-category="promocoes">
+        <div class="destaque-badge">🔥 -20%</div>
+        <img src="combo1.jpg" alt="Combo Família" loading="lazy">
+        <h3>Combo Família</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (445)</div>
+        <p class="preco-original">R$ 120,00</p>
+        <p class="preco">R$ 96,00</p>
+        <small>4 Burgers + 4 Fritas + 4 Bebidas + Sobremesa</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Combo Família', 96)">❤️</button>
+          <button onclick="addCarrinho('Combo Família', 96, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card promocao" data-category="promocoes">
+        <div class="destaque-badge">⚡ -15%</div>
+        <img src="combo2.jpg" alt="Combo Casal" loading="lazy">
+        <h3>Combo Casal</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (678)</div>
+        <p class="preco-original">R$ 75,00</p>
+        <p class="preco">R$ 63,75</p>
+        <small>2 Burgers + 2 Fritas + 2 Bebidas</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Combo Casal', 63.75)">❤️</button>
+          <button onclick="addCarrinho('Combo Casal', 63.75, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card promocao" data-category="promocoes">
+        <div class="destaque-badge">💥 -10%</div>
+        <img src="combo4.jpg" alt="Combo Monster" loading="lazy">
+        <h3>Combo Monster</h3>
+        <div class="rating">⭐⭐⭐⭐ (234)</div>
+        <p class="preco-original">R$ 170,00</p>
+        <p class="preco">R$ 153,00</p>
+        <small>5 Burger + Fritas + Bebida</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Combo Monster', 153)">❤️</button>
+          <button onclick="addCarrinho('Combo Monster', 153, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card promocoes" data-category="promocoes">
+        <div class="destaque-badge">🔥 -25%</div>
+        <img src="combo5.jpg" alt="Combo Kids" loading="lazy">
+        <h3>Combo Kids</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (512)</div>
+        <p class="preco-original">R$ 150,00</p>
+        <p class="preco">R$ 112,50</p>
+        <small>4 Burgers + 4 Fritas + 4 Bebidas + 4 Sobremesas</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Combo Kids', 112.5)">❤️</button>
+          <button onclick="addCarrinho('Combo Kids', 112.5, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card promocao" data-category="promocoes">
+        <div class="destaque-badge">💳 Vale</div>
+        <img src="combo3.jpg" alt="Combo Solo" loading="lazy">
+        <h3>Combo Solo</h3>
+        <div class="rating">⭐⭐⭐⭐ (234)</div>
+        <p class="preco-original">R$ 45,00</p>
+        <p class="preco">R$ 39,00</p>
+        <small>1 Burger + Fritas + Bebida + Sobremesa</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Combo Solo', 39)">❤️</button>
+          <button onclick="addCarrinho('Combo Solo', 39, 4)">Adicionar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AÇAÍ -->
+  <div id="categoria-acai" class="categoria">
+    <h3 class="categoria-title">🫐 Açaí Gourmet</h3>
+    <div class="grid">
+
+      <div class="card" data-category="acai">
+        <img src="acai1.jpg" alt="Açaí Morango" loading="lazy">
+        <h3>Açaí Morango</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (567)</div>
+        <p>R$ 18,00</p>
+        <small>Açaí com morango fresco e granola</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Açaí Morango', 18)">❤️</button>
+          <button onclick="addCarrinho('Açaí Morango', 18, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acai">
+        <img src="acai2.jpg" alt="Açaí Banana" loading="lazy">
+        <h3>Açaí Banana</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (634)</div>
+        <p>R$ 17,00</p>
+        <small>Açaí com banana, mel e aveia</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Açaí Banana', 17)">❤️</button>
+          <button onclick="addCarrinho('Açaí Banana', 17, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acai">
+        <img src="acai3.jpg" alt="Açaí Tropical" loading="lazy">
+        <h3>Açaí Tropical</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (789)</div>
+        <p>R$ 20,00</p>
+        <small>Açaí com manga, abacaxi e coco ralado</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Açaí Tropical', 20)">❤️</button>
+          <button onclick="addCarrinho('Açaí Tropical', 20, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acai">
+        <img src="acai4.jpg" alt="Açaí Chocolate" loading="lazy">
+        <h3>Açaí Chocolate</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (456)</div>
+        <p>R$ 19,00</p>
+        <small>Açaí com chocolate, amendoim e calda</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Açaí Chocolate', 19)">❤️</button>
+          <button onclick="addCarrinho('Açaí Chocolate', 19, 5)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acai">
+        <img src="acai5.jpg" alt="Açaí Mirtilo" loading="lazy">
+        <h3>Açaí Mirtilo</h3>
+        <div class="rating">⭐⭐⭐⭐ (512)</div>
+        <p>R$ 19,00</p>
+        <small>Açaí com mirtilo, blueberry e mel</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Açaí Mirtilo', 19)">❤️</button>
+          <button onclick="addCarrinho('Açaí Mirtilo', 19, 4)">Adicionar</button>
+        </div>
+      </div>
+
+      <div class="card" data-category="acai">
+        <img src="acai6.jpg" alt="Açaí Premium" loading="lazy">
+        <h3>Açaí Premium</h3>
+        <div class="rating">⭐⭐⭐⭐⭐ (723)</div>
+        <p>R$ 24,00</p>
+        <small>Açaí com frutas vermelhas, nuts e mel</small>
+        <div class="card-options">
+          <button onclick="adicionarFavorito('Açaí Premium', 24)">❤️</button>
+          <button onclick="addCarrinho('Açaí Premium', 24, 5)">Adicionar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- AVALIAÇÕES -->
+<section id="avaliacoes" class="section avaliacoes-section">
+  <h2>⭐ Avaliações de Clientes</h2>
+  
+  <div class="avaliacoes-container">
+    <div class="avaliacao-card">
+      <div class="avaliacao-header">
+        <h4>João Silva</h4>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+      </div>
+      <p>"Melhor burger que já comi! Entrega rápida e comida quentinha. Super recomendo!"</p>
+      <small>Entregue há 2 dias</small>
+    </div>
+
+    <div class="avaliacao-card">
+      <div class="avaliacao-header">
+        <h4>Maria Costa</h4>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+      </div>
+      <p>"Atendimento excelente! Os lanches são deliciosos e chegam bem embalados."</p>
+      <small>Entregue há 5 dias</small>
+    </div>
+
+    <div class="avaliacao-card">
+      <div class="avaliacao-header">
+        <h4>Pedro Santos</h4>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+      </div>
+      <p>"Combo família vale muito a pena! Comeu todo mundo e sobrou. Melhor custo benefício."</p>
+      <small>Entregue há 1 semana</small>
+    </div>
+
+    <div class="avaliacao-card">
+      <div class="avaliacao-header">
+        <h4>Ana Lima</h4>
+        <div class="rating">⭐⭐⭐⭐</div>
+      </div>
+      <p>"Muito bom! A única questão foi um pouco de demora na entrega, mas tudo perfeito."</p>
+      <small>Entregue há 1 semana</small>
+    </div>
+  </div>
+
+  <button class="btn btn-large" onclick="abrirAvaliacaoModal()">Deixe sua Avaliação</button>
+</section>
+
+<!-- SEÇÃO DE CONTATO -->
+<section id="contato" class="section contato-section">
+  <h2>📞 Fale Conosco</h2>
+  
+  <div class="contato-info">
+    <div class="contato-item">
+      <h3>📱 WhatsApp</h3>
+      <a href="https://wa.me/5591992556490" target="_blank" class="btn">Conversar agora</a>
+    </div>
+
+    <div class="contato-item">
+      <h3>📍 Localização</h3>
+      <p>Rua das Flores, 123<br>Belo Horizonte - MG<br>CEP: 30000-000</p>
+    </div>
+
+    <div class="contato-item">
+      <h3>⏰ Horário</h3>
+      <p>Seg-Dom: 10h às 23h<br>Domingos: 11h às 22h</p>
+    </div>
+  </div>
+</section>
+
+  
+<!-- CARRINHO FLUTUANTE -->
+<div class="cart">
+  <div class="cart-header">
+    <h3>🛒 Carrinho</h3>
+    <span class="contador" id="contador">0</span>
+  </div>
+  <ul id="cart-items"></ul>
+  <div class="cart-totals">
+    <div class="total-line">Subtotal: <span id="subtotal">0</span></div>
+    <div class="total-line">Taxa: <span id="taxa">0</span></div>
+    <div class="total-line destaque">Total: <span id="total">0,00</span></div>
+  </div>
+  <button onclick="abrirModal()" class="btn-checkout">💳 Finalizar Pedido</button>
+</div>
+
+<!-- MODAL DE LOGIN -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="fecharLogin()">&times;</span>
+    <h2>👤 Fazer Login</h2>
+    
+    <div class="modal-tabs">
+      <button class="tab-btn active" onclick="abrirAba('login')">Login</button>
+      <button class="tab-btn" onclick="abrirAba('cadastro')">Cadastro</button>
+    </div>
+
+    <div id="aba-login" class="tab-content active">
+      <input type="email" id="emailLogin" placeholder="Email" class="modal-input">
+      <input type="password" id="senhaLogin" placeholder="Senha" class="modal-input">
+      <button onclick="fazerLogin()" class="btn">Entrar</button>
+      <a href="#" class="link-pequeno">Esqueceu a senha?</a>
+    </div>
+
+    <div id="aba-cadastro" class="tab-content">
+      <input type="text" id="nomeRegistro" placeholder="Nome completo" class="modal-input">
+      <input type="email" id="emailRegistro" placeholder="Email" class="modal-input">
+      <input type="tel" id="teleRegistro" placeholder="Telefone" class="modal-input">
+      <input type="password" id="senhaRegistro" placeholder="Senha" class="modal-input">
+      <input type="password" id="senhaConfirm" placeholder="Confirmar senha" class="modal-input">
+      <button onclick="fazerRegistro()" class="btn">Cadastrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE PEDIDO -->
+<div id="pedidoModal" class="modal">
+  <div class="modal-content modal-pedido">
+    <span class="close" onclick="fecharModal()">&times;</span>
+    <h2>📦 Resumo do Pedido</h2>
+
+    <!-- DADOS PESSOAIS -->
+    <div class="modal-section">
+      <h3>👤 Dados Pessoais</h3>
+      <input type="text" id="nome" placeholder="Seu nome" class="modal-input">
+      <input type="email" id="email" placeholder="Email" class="modal-input">
+      <input type="tel" id="telefone" placeholder="Telefone com DDD" class="modal-input">
+      <div id="pontos-fidelidade" style="padding: 10px; background: #2a2a2a; border-radius: 5px; margin-top: 10px; color: orange; font-weight: bold;">Bronze | 0 pts</div>
+    </div>
+
+    <!-- ENDEREÇOS SALVOS -->
+    <div class="modal-section" id="enderecos-salvos-section">
+      <h3>📍 Selecione um Endereço Salvo</h3>
+      <div id="enderecos-salvos-list" style="margin-bottom: 15px;"></div>
+    </div>
+
+    <!-- ENDEREÇO -->
+    <div class="modal-section">
+      <h3>📍 Endereço de Entrega</h3>
+      <input type="text" id="endereco" placeholder="Rua e número" class="modal-input">
+      <input type="text" id="bairro" placeholder="Bairro" class="modal-input">
+      <input type="text" id="numero" placeholder="Número" class="modal-input">
+      <input type="text" id="complemento" placeholder="Complemento (opcional)" class="modal-input">
+      <input type="text" id="cep" placeholder="CEP" class="modal-input">
+      <label style="margin-top: 10px; display: flex; align-items: center; gap: 8px; color: #aaa;">
+        <input type="checkbox" id="salvarEndereco" style="cursor: pointer;">
+        Salvar endereço para próximas compras
+      </label>
+      <button onclick="calcularEntrega()" class="btn-mini" style="margin-top: 10px;">Calcular Entrega</button>
+    </div>
+
+    <!-- CUPOM -->
+    <div class="modal-section">
+      <h3>🎁 Cupom de Desconto & Pontos</h3>
+      <div class="cupom-container">
+        <input type="text" id="cupom" placeholder="Código do cupom" class="modal-input">
+        <button onclick="aplicarCupom()" class="btn-mini">Aplicar</button>
+      </div>
+      <div id="cupomInfo"></div>
+      <button onclick="usarPontos()" class="btn-mini" style="margin-top: 10px; width: 100%; background: #ff9500;">🎁 Usar 100 Pontos para Desconto</button>
+    </div>
+
+    <!-- FORMA DE PAGAMENTO -->
+    <div class="modal-section">
+      <h3>💳 Forma de Pagamento</h3>
+      <select id="pagamento" onchange="mostrarPagamento()" class="modal-input">
+        <option value="">Selecione uma forma de pagamento</option>
+        <option value="pix">💳 Pix</option>
+        <option value="credito">💳 Cartão de Crédito</option>
+        <option value="debito">💳 Cartão de Débito</option>
+        <option value="dinheiro">💵 Dinheiro na Entrega</option>
+      </select>
+
+      <!-- PIX -->
+      <div id="pix-box" class="pagamento-box" style="display:none;">
+        <p><strong>Escaneie o QR Code:</strong></p>
+        <img id="qrcodePix" width="150" alt="QR Code PIX">
+        <p><strong>Ou copia a chave:</strong></p>
+        <div class="chave-pix">
+          <span id="chavePix">043.144.112-01</span>
+          <button onclick="copiarChave()" class="btn-copy">Copiar</button>
+        </div>
+      </div>
+
+      <!-- CARTÃO -->
+      <div id="cartao-box" class="pagamento-box" style="display:none;">
+        <input type="text" id="nomeCartao" placeholder="Nome no cartão" class="modal-input">
+        <input type="text" id="numeroCartao" placeholder="Número do cartão" class="modal-input" maxlength="19">
+        <div class="cartao-row">
+          <input type="text" id="validadeCartao" placeholder="MM/AA" class="modal-input" maxlength="5">
+          <input type="text" id="cvvCartao" placeholder="CVV" class="modal-input" maxlength="3">
+        </div>
+      </div>
+
+      <!-- DINHEIRO -->
+      <div id="dinheiro-box" class="pagamento-box" style="display:none;">
+        <p>💵 Troco necessário?</p>
+        <input type="number" id="trocoValor" placeholder="Digite o valor para o troco" class="modal-input">
+      </div>
+    </div>
+
+    <!-- OBSERVAÇÕES -->
+    <div class="modal-section">
+      <h3>📝 Observações</h3>
+      <textarea id="obs" placeholder="Descreva suas preferências (sem cebola, sem maionese, etc)" class="modal-textarea"></textarea>
+    </div>
+
+    <!-- RESUMO FINAL -->
+    <div class="modal-section resumo-final">
+      <h3>💰 Resumo do Pedido</h3>
+      <div class="resumo-item">
+        <span>Subtotal:</span>
+        <span id="resumoSubtotal">R$ 0,00</span>
+      </div>
+      <div class="resumo-item">
+        <span>Taxa de Entrega:</span>
+        <span id="resumoTaxa">R$ 0,00</span>
+      </div>
+      <div class="resumo-item desconto" id="resumoDesconto" style="display:none;">
+        <span>Desconto:</span>
+        <span id="resumoDescontoValor">-R$ 0,00</span>
+      </div>
+      <div class="resumo-item total">
+        <span><strong>Total Final:</strong></span>
+        <span id="resumoTotal"><strong>R$ 0,00</strong></span>
+      </div>
+    </div>
+
+    <div class="modal-buttons">
+      <button onclick="enviarWhats()" class="btn btn-large">✅ Confirmar Pedido</button>
+      <button onclick="fecharModal()" class="btn-cancel">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE AVALIAÇÃO -->
+<div id="avaliacaoModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="fecharAvaliacaoModal()">&times;</span>
+    <h2>⭐ Deixe sua Avaliação</h2>
+    
+    <input type="text" id="nomeAvaliacao" placeholder="Seu nome" class="modal-input">
+    <textarea id="textoAvaliacao" placeholder="Sua opinião sobre o pedido..." class="modal-textarea"></textarea>
+    
+    <div class="rating-selector">
+      <p>Nota:</p>
+      <div class="stars">
+        <button onclick="selecionarEstrela(1)" class="star">⭐</button>
+        <button onclick="selecionarEstrela(2)" class="star">⭐</button>
+        <button onclick="selecionarEstrela(3)" class="star">⭐</button>
+        <button onclick="selecionarEstrela(4)" class="star">⭐</button>
+        <button onclick="selecionarEstrela(5)" class="star">⭐</button>
+      </div>
+    </div>
+
+    <button onclick="enviarAvaliacao()" class="btn">Enviar Avaliação</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-box">
+      <h3>🍔 Noir Burgers</h3>
+      <p>A melhor experiência em hambúrgueres premium direto na sua casa.</p>
+      <div class="social">
+        <a href="https://wa.me/5591992556490" target="_blank">🟢</a>
+        <a href="#" target="_blank">📘</a>
+        <a href="#" target="_blank">📷</a>
+        <a href="#" target="_blank">🐦</a>
+      </div>
+    </div>
+
+    <div class="footer-box">
+      <h3>Menu</h3>
+      <ul>
+        <li><a href="#menu">Cardápio</a></li>
+        <li><a href="#destaques">Destaques</a></li>
+        <li><a href="#avaliacoes">Avaliações</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-box">
+      <h3>Atendimento</h3>
+      <ul>
+        <li><a href="#">Rastrear Pedido</a></li>
+        <li><a href="#">Política de Privacidade</a></li>
+        <li><a href="#">Termos de Uso</a></li>
+        <li><a href="#">Fale Conosco</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-box">
+      <h3>Contato</h3>
+      <p>📱 (31) 99925-5649<br>
+      📧 contato@noirburgers.com.br<br>
+      ⏰ Seg-Dom: 10h às 23h</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 Noir Burgers - Todos os direitos reservados | Desenvolvido com ❤️</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
