@@ -108,6 +108,7 @@ nav a:hover {
 /* HERO */
 .hero {
   height: 70vh;
+  min-height: 400px;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -200,7 +201,9 @@ nav a:hover {
 .preco-original {
   text-decoration: line-through;
   color: #888;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  margin: 5px 0 0 0;
+  font-weight: normal;
 }
 
 .preco {
@@ -271,6 +274,7 @@ nav a:hover {
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-auto-rows: 1fr;
   gap: 25px;
   margin-top: 30px;
 }
@@ -287,6 +291,9 @@ nav a:hover {
   overflow: hidden;
   will-change: transform, box-shadow;
   contain: layout style paint;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card:hover {
@@ -298,6 +305,7 @@ nav a:hover {
 .card img {
   width: 100%;
   height: 240px;
+  aspect-ratio: 1/1;
   object-fit: cover;
   object-position: center;
   border-radius: 10px;
@@ -305,6 +313,7 @@ nav a:hover {
   will-change: transform;
   animation: imageLoad 0.4s ease-out;
   display: block;
+  flex-shrink: 0;
 }
 
 @keyframes imageLoad {
@@ -340,12 +349,14 @@ nav a:hover {
   font-size: 0.85rem;
   margin-bottom: 15px;
   line-height: 1.5;
+  flex-grow: 1;
 }
 
 /* OPÇÕES DO CARD */
 .card-options {
   display: flex;
   gap: 10px;
+  margin-top: auto;
 }
 
 .card-options button {
@@ -381,7 +392,7 @@ nav a:hover {
 /* BOTÃO PADRÃO */
 .btn {
   background: orange;
-  padding: 12px 30px;
+  padding: 14px 30px;
   border: none;
   color: black;
   border-radius: 25px;
@@ -389,6 +400,13 @@ nav a:hover {
   font-weight: bold;
   transition: 0.3s;
   font-size: 1rem;
+  min-height: 48px;
+  min-width: 120px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn:hover {
@@ -1068,28 +1086,58 @@ nav a:hover {
 @media (max-width: 480px) {
   header {
     padding: 12px 15px;
+    flex-direction: column;
+  }
+
+  .header-left {
+    width: 100%;
+    text-align: center;
+    order: 1;
   }
 
   .header-left h1 {
     font-size: 1.4rem;
+    margin-bottom: 10px;
   }
 
   nav {
-    flex-direction: column;
+    order: 2;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 8px;
+    justify-content: center;
   }
 
   nav a {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    border: 1px solid #444;
+    border-radius: 15px;
   }
 
   #status-loja {
-    font-size: 0.8rem !important;
+    font-size: 0.75rem !important;
     margin-left: 0 !important;
+    width: 100%;
+    text-align: center;
+    order: 2.5;
+  }
+
+  .header-right {
+    order: 3;
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-container {
+    width: 100%;
   }
 
   .search-box {
-    width: 80px;
+    width: 100%;
+    padding: 10px 12px;
   }
 
   .hero {
@@ -1124,7 +1172,7 @@ nav a:hover {
   }
 
   .card img {
-    height: 180px;
+    height: 200px;
   }
 
   .card h3 {
@@ -1146,16 +1194,26 @@ nav a:hover {
   .filter-btn {
     padding: 10px 15px;
     font-size: 0.85rem;
+    flex: 1 1 calc(50% - 4px);
   }
 
   .categoria-title {
     font-size: 1.2rem;
+    margin-left: 15px;
+  }
+
+  .btn-user {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    flex: 1;
+    min-width: 70px;
   }
 
   .modal-content {
     width: 98%;
     padding: 20px;
     max-height: 90vh;
+    border-radius: 12px;
   }
 
   .contato-info {
@@ -1164,6 +1222,43 @@ nav a:hover {
 
   .contato-item {
     padding: 20px;
+    border-radius: 8px;
+  }
+
+  .card button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+}
+
+/* RESPONSIVO - TELAS MUITO PEQUENAS */
+@media (max-width: 360px) {
+  .hero h2 {
+    font-size: 1.3rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  .section h2 {
+    font-size: 1.5rem;
+  }
+
+  nav a {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+
+  .search-box {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 }
 
