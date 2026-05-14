@@ -5,11 +5,20 @@
   max-width: 100%;
 }
 
+html {
+  scroll-behavior: auto;
+}
+
+@media (min-width: 769px) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #0f0f0f;
   color: white;
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -48,8 +57,10 @@ nav {
 nav a {
   color: white;
   text-decoration: none;
-  transition: 0.3s;
+  transition: color 0.2s ease;
   font-weight: 500;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 nav a:hover {
@@ -95,6 +106,8 @@ nav a:hover {
   color: white;
   font-weight: bold;
   transition: 0.3s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .search-btn:hover {
@@ -109,6 +122,8 @@ nav a:hover {
   border-radius: 20px;
   cursor: pointer;
   transition: 0.3s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn-user:hover {
@@ -267,7 +282,13 @@ nav a:hover {
   background: orange;
   border-color: orange;
   color: black;
-  transform: scale(1.05);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .filter-btn:hover,
+  .filter-btn.active {
+    transform: scale(1.03);
+  }
 }
 
 /* CATEGORIA */
@@ -297,22 +318,33 @@ nav a:hover {
   background: #1a1a1a;
   padding: 15px;
   border-radius: 15px;
-  transition: all 0.3s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
   border: 2px solid transparent;
   position: relative;
   overflow: hidden;
-  will-change: transform, box-shadow;
   contain: layout style paint;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 40px rgba(255, 165, 0, 0.3);
-  border-color: orange;
+@media (hover: hover) and (pointer: fine) {
+  .card {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(255, 165, 0, 0.28);
+    border-color: orange;
+  }
+}
+
+.card picture {
+  display: block;
+  width: 100%;
+  flex-shrink: 0;
 }
 
 .card img {
@@ -323,10 +355,14 @@ nav a:hover {
   object-position: center;
   border-radius: 10px;
   margin-bottom: 10px;
-  will-change: transform;
-  animation: imageLoad 0.4s ease-out;
   display: block;
   flex-shrink: 0;
+}
+
+@media (min-width: 769px) {
+  .card img {
+    animation: imageLoad 0.35s ease-out;
+  }
 }
 
 @keyframes imageLoad {
@@ -424,7 +460,12 @@ nav a:hover {
 
 .btn:hover {
   background: #ff8c00;
-  transform: scale(1.05);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    transform: scale(1.03);
+  }
 }
 
 .btn-large {
@@ -451,12 +492,18 @@ nav a:hover {
   padding: 20px;
   border-radius: 12px;
   border-left: 4px solid orange;
-  transition: 0.3s;
+  transition: background 0.2s ease;
 }
 
-.avaliacao-card:hover {
-  transform: translateX(5px);
-  box-shadow: 0 10px 25px rgba(255, 165, 0, 0.2);
+@media (hover: hover) and (pointer: fine) {
+  .avaliacao-card {
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .avaliacao-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 8px 20px rgba(255, 165, 0, 0.18);
+  }
 }
 
 .avaliacao-header {
@@ -518,7 +565,7 @@ nav a:hover {
 /* CARRINHO FLUTUANTE */
 .cart {
   position: fixed;
-  right: 20px;
+  right: 30px;
   bottom: 20px;
   background: #1a1a1a;
   padding: 20px;
@@ -685,6 +732,45 @@ nav a:hover {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes notifEntrada {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes notifSaida {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+.footer-box .footer-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: #aaa;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline;
+  text-align: left;
+}
+
+.footer-box .footer-link-btn:hover {
+  color: orange;
 }
 
 .close {
@@ -1004,12 +1090,20 @@ nav a:hover {
 }
 
 .social a {
-  transition: 0.3s;
+  transition: color 0.2s ease;
   display: inline-block;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.social a:hover {
-  transform: scale(1.3);
+@media (hover: hover) and (pointer: fine) {
+  .social a {
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .social a:hover {
+    transform: scale(1.15);
+  }
 }
 
 .footer-bottom {
@@ -1027,6 +1121,29 @@ nav a:hover {
 
 /* RESPONSIVO - TABLETS */
 @media (max-width: 768px) {
+  .hero {
+    background-color: #0a0a0a;
+    background-image: url("hero-poster.webp");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero .bg-video {
+    display: none !important;
+  }
+
+  .destaque-badge {
+    animation: none;
+  }
+
+  .card img {
+    animation: none;
+  }
+
+  .hero-content {
+    animation-duration: 0.42s;
+  }
+
   header {
     flex-direction: column;
     gap: 15px;
@@ -1057,6 +1174,7 @@ nav a:hover {
 
   .hero h2 {
     font-size: 2rem;
+    text-shadow: 4px 4px 18px rgba(0, 0, 0, 0.72);
   }
 
   .section {
@@ -1119,6 +1237,9 @@ nav a:hover {
     gap: 4px;
     font-size: 0.7rem;
     padding: 4px 0;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scroll-behavior: auto;
   }
 
   nav a {
@@ -1177,6 +1298,7 @@ nav a:hover {
   .hero h2 {
     font-size: 1.3rem;
     margin-bottom: 8px;
+    text-shadow: 3px 3px 14px rgba(0, 0, 0, 0.78);
   }
 
   .hero p {
@@ -1443,8 +1565,10 @@ nav a:hover {
   50% { opacity: 0.7; }
 }
 
-.destaque-badge {
-  animation: pulse 2s infinite;
+@media (min-width: 769px) {
+  .destaque-badge {
+    animation: pulse 2s infinite;
+  }
 }
 
 .btn:active {
@@ -1452,6 +1576,28 @@ nav a:hover {
 }
 
 /* SUPORTE A TEMAS */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  .hero-content {
+    animation: none;
+  }
+
+  .modal-content {
+    animation: none;
+  }
+
+  .destaque-badge {
+    animation: none !important;
+  }
+
+  .card img {
+    animation: none !important;
+  }
+}
+
 @media (prefers-color-scheme: light) {
   body {
     background: #f5f5f5;

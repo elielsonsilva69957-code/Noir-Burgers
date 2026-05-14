@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
@@ -8,13 +8,14 @@
   <meta name="theme-color" content="#0f0f0f">
   <title>Noir Burgers - Delivery Premium</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preload" as="image" href="hero-poster.webp" media="(max-width: 768px)">
 </head>
 
 <body>
 
 <header>
   <div class="header-left">
-    <h1>🍔 Noir Burgers</h1>
+    <h1>🍔 Noir king Burgers</h1>
   </div>
 
   <nav>
@@ -28,8 +29,8 @@
 
   <div class="header-right">
     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Buscar produto..." class="search-box">
-      <button onclick="buscarProduto()" class="search-btn">🔍</button>
+      <input type="text" id="searchInput" placeholder="Buscar produto..." class="search-box" aria-label="Buscar produto no cardápio" autocomplete="off">
+      <button type="button" onclick="buscarProduto()" class="search-btn" aria-label="Buscar">🔍</button>
     </div>
     <button class="btn-user" onclick="abrirUltimoPedido()" title="Seu último pedido">🕐</button>
     <button class="btn-user" onclick="abrirRastreamento()" title="Rastrear pedidos">📦</button>
@@ -39,16 +40,16 @@
 
 <!-- HERO -->
 <section id="home" class="hero">
-  <video autoplay muted loop class="bg-video">
+  <video id="heroVideo" autoplay muted loop playsinline class="bg-video" poster="hero-poster.webp" preload="metadata">
     <source src="video.mp4" type="video/mp4">
   </video>
 
   <div class="overlay"></div>
 
   <div class="hero-content">
-    <h2><span>Alto nivel</span> Onde cada Mordida<br>é uma <span>Obra-Prima</span></h2>
+    <h2><span>Noir</span> seu novo vício <span>Tem Nome</span></h2>
     <p>Experiência gastronômica premium direto na sua casa</p>
-    <button class="btn" onclick="document.getElementById('menu').scrollIntoView({behavior: 'smooth'})">Pedir agora</button>
+    <button class="btn" onclick="scrollParaMenuCardapio()">Pedir agora</button>
   </div>
 </section>
 
@@ -59,7 +60,7 @@
   <div class="grid">
     <div class="card destaque">
       <div class="destaque-badge">🔥 -15%</div>
-      <img src="food1.jpg" alt="Smash Burger Premium" loading="lazy">
+      <picture><source type="image/webp" media="(max-width: 480px)" srcset="food1-sm.webp"><source type="image/webp" srcset="food1.webp"><img src="food1.jpg" alt="Smash Burger Premium" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
       <h3>Smash Burger Premium</h3>
       <div class="rating">⭐⭐⭐⭐⭐ (428 avaliações)</div>
       <p class="preco-original">R$ 25,00</p>
@@ -70,7 +71,7 @@
 
     <div class="card destaque">
       <div class="destaque-badge">⚡ Novo</div>
-      <img src="food2.jpg" alt="X-Burguer Gourmet" loading="lazy">
+      <picture><source type="image/webp" media="(max-width: 480px)" srcset="food2-sm.webp"><source type="image/webp" srcset="food2.webp"><img src="food2.jpg" alt="X-Burguer Gourmet" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
       <h3>X-Burguer Gourmet</h3>
       <div class="rating">⭐⭐⭐⭐⭐ (156 avaliações)</div>
       <p class="preco-original">R$ 36,00</p>
@@ -81,7 +82,7 @@
 
     <div class="card destaque">
       <div class="destaque-badge">❤️ Popular</div>
-      <img src="food5.jpg" alt="Combo Deluxe" loading="lazy">
+      <picture><source type="image/webp" media="(max-width: 480px)" srcset="food5-sm.webp"><source type="image/webp" srcset="food5.webp"><img src="food5.jpg" alt="Combo Deluxe" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
       <h3>Combo Deluxe</h3>
       <div class="rating">⭐⭐⭐⭐ (892 avaliações)</div>
       <p class="preco-original">R$ 45,00</p>
@@ -92,7 +93,7 @@
 
     <div class="card destaque">
       <div class="destaque-badge">🌟 Melhor</div>
-      <img src="food7.jpg" alt="Mega Burger" loading="lazy">
+      <picture><source type="image/webp" media="(max-width: 480px)" srcset="food7-sm.webp"><source type="image/webp" srcset="food7.webp"><img src="food7.jpg" alt="Mega Burger" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
       <h3>Mega Burger</h3>
       <div class="rating">⭐⭐⭐⭐⭐ (756 avaliações)</div>
       <p class="preco-original">R$ 38,00</p>
@@ -103,7 +104,7 @@
 
     <div class="card destaque">
       <div class="destaque-badge">💥 Hot</div>
-      <img src="food8.jpg" alt="Burger Picante" loading="lazy">
+      <picture><source type="image/webp" media="(max-width: 480px)" srcset="food8-sm.webp"><source type="image/webp" srcset="food8.webp"><img src="food8.jpg" alt="Burger Picante" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
       <h3>Burger Picante</h3>
       <div class="rating">⭐⭐⭐⭐ (523 avaliações)</div>
       <p class="preco-original">R$ 29,00</p>
@@ -114,7 +115,7 @@
 
     <div class="card destaque">
       <div class="destaque-badge">👑 Premium</div>
-      <img src="food9.jpg" alt="Burger Trufa" loading="lazy">
+      <picture><source type="image/webp" media="(max-width: 480px)" srcset="food9-sm.webp"><source type="image/webp" srcset="food9.webp"><img src="food9.jpg" alt="Burger Trufa" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
       <h3>Burger Trufa</h3>
       <div class="rating">⭐⭐⭐⭐⭐ (645 avaliações)</div>
       <p class="preco-original">R$ 55,00</p>
@@ -130,14 +131,14 @@
   <h2>📋 Cardápio Completo</h2>
   
   <div class="filter-container">
-    <button class="filter-btn active" onclick="filtrarCategoria('todos')">Todos</button>
-    <button class="filter-btn" onclick="filtrarCategoria('burgers')">🍔 Burgers</button>
-    <button class="filter-btn" onclick="filtrarCategoria('fritas')">🍟 Fritas</button>
-    <button class="filter-btn" onclick="filtrarCategoria('bebidas')">🥤 Bebidas</button>
-    <button class="filter-btn" onclick="filtrarCategoria('sobremesas')">🍰 Sobremesas</button>
-    <button class="filter-btn" onclick="filtrarCategoria('acai')">🫐 Açaí</button>
-    <button class="filter-btn" onclick="filtrarCategoria('acompanhamentos')">🍗 Acompanhamentos</button>
-    <button class="filter-btn" onclick="filtrarCategoria('promocoes')">🎁 Promoções</button>
+    <button type="button" class="filter-btn active" onclick="filtrarCategoria('todos', this)">Todos</button>
+    <button type="button" class="filter-btn" onclick="filtrarCategoria('burgers', this)">🍔 Burgers</button>
+    <button type="button" class="filter-btn" onclick="filtrarCategoria('fritas', this)">🍟 Fritas</button>
+    <button type="button" class="filter-btn" onclick="filtrarCategoria('bebidas', this)">🥤 Bebidas</button>
+    <button type="button" class="filter-btn" onclick="filtrarCategoria('sobremesas', this)">🍰 Sobremesas</button>
+    <button type="button" class="filter-btn" onclick="filtrarCategoria('acai', this)">🫐 Açaí</button>
+    <button type="button" class="filter-btn" onclick="filtrarCategoria('acompanhamentos', this)">🍗 Acompanhamentos</button>
+    <button type="button" class="filter-btn" onclick="filtrarCategoria('promocoes', this)">🎁 Promoções</button>
   </div>
 
   <!-- BURGERS -->
@@ -146,7 +147,7 @@
     <div class="grid">
 
       <div class="card" data-category="burgers">
-        <img src="food1.jpg" alt="Smash Burger" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="food1-sm.webp"><source type="image/webp" srcset="food1.webp"><img src="food1.jpg" alt="Smash Burger" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Smash Burger</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (428)</div>
         <p>R$ 25,00</p>
@@ -158,7 +159,7 @@
       </div>
 
       <div class="card" data-category="burgers">
-        <img src="food2.jpg" alt="X-Burguer" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="food2-sm.webp"><source type="image/webp" srcset="food2.webp"><img src="food2.jpg" alt="X-Burguer" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>X-Burguer</h3>
         <div class="rating">⭐⭐⭐⭐ (312)</div>
         <p>R$ 30,00</p>
@@ -170,7 +171,7 @@
       </div>
 
       <div class="card" data-category="burgers">
-        <img src="food3.jpg" alt="X-Bacon" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="food3-sm.webp"><source type="image/webp" srcset="food3.webp"><img src="food3.jpg" alt="X-Bacon" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>X-Bacon</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (567)</div>
         <p>R$ 28,00</p>
@@ -182,7 +183,7 @@
       </div>
 
       <div class="card" data-category="burgers">
-        <img src="food4.jpg" alt="X-Tudo" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="food4-sm.webp"><source type="image/webp" srcset="food4.webp"><img src="food4.jpg" alt="X-Tudo" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>X-Tudo</h3>
         <div class="rating">⭐⭐⭐⭐ (189)</div>
         <p>R$ 32,00</p>
@@ -194,7 +195,7 @@
       </div>
 
       <div class="card" data-category="burgers">
-        <img src="food5.jpg" alt="Combo Burger" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="food5-sm.webp"><source type="image/webp" srcset="food5.webp"><img src="food5.jpg" alt="Combo Burger" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Combo Burger</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (892)</div>
         <p>R$ 39,00</p>
@@ -206,7 +207,7 @@
       </div>
 
       <div class="card" data-category="burgers">
-        <img src="food6.jpg" alt="Hambúrguer Duplo" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="food6-sm.webp"><source type="image/webp" srcset="food6.webp"><img src="food6.jpg" alt="Hambúrguer Duplo" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Hambúrguer Duplo</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (734)</div>
         <p>R$ 35,00</p>
@@ -226,7 +227,7 @@
     <div class="grid">
 
       <div class="card" data-category="fritas">
-        <img src="fritas1.jpg" alt="Batata Frita" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="fritas1-sm.webp"><source type="image/webp" srcset="fritas1.webp"><img src="fritas1.jpg" alt="Batata Frita" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Batata Frita</h3>
         <div class="rating">⭐⭐⭐⭐ (245)</div>
         <p>R$ 12,00</p>
@@ -238,7 +239,7 @@
       </div>
 
       <div class="card" data-category="fritas">
-        <img src="fritas2.jpg" alt="Batata com Cheddar" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="fritas2-sm.webp"><source type="image/webp" srcset="fritas2.webp"><img src="fritas2.jpg" alt="Batata com Cheddar" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Batata com Cheddar</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (456)</div>
         <p>R$ 15,00</p>
@@ -250,7 +251,7 @@
       </div>
 
       <div class="card" data-category="fritas">
-        <img src="fritas3.jpg" alt="Batata com Bacon" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="fritas3-sm.webp"><source type="image/webp" srcset="fritas3.webp"><img src="fritas3.jpg" alt="Batata com Bacon" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Batata com Bacon</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (623)</div>
         <p>R$ 18,00</p>
@@ -262,7 +263,7 @@
       </div>
 
       <div class="card" data-category="fritas">
-        <img src="fritas4.jpg" alt="Batata Suprema" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="fritas4-sm.webp"><source type="image/webp" srcset="fritas4.webp"><img src="fritas4.jpg" alt="Batata Suprema" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Batata Suprema</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (789)</div>
         <p>R$ 22,00</p>
@@ -274,7 +275,7 @@
       </div>
 
       <div class="card" data-category="fritas">
-        <img src="fritas5.jpg" alt="Batata Rústica" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="fritas5-sm.webp"><source type="image/webp" srcset="fritas5.webp"><img src="fritas5.jpg" alt="Batata Rústica" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Batata Rústica com Alho</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (334)</div>
         <p>R$ 13,00</p>
@@ -286,7 +287,7 @@
       </div>
 
       <div class="card" data-category="fritas">
-        <img src="fritas6.jpg" alt="Batata Doce Frita" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="fritas6-sm.webp"><source type="image/webp" srcset="fritas6.webp"><img src="fritas6.jpg" alt="Batata Doce Frita" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Batata Doce Frita</h3>
         <div class="rating">⭐⭐⭐⭐ (456)</div>
         <p>R$ 14,00</p>
@@ -306,7 +307,7 @@
     <div class="grid">
 
       <div class="card" data-category="bebidas">
-        <img src="bebida1.jpg" alt="Refrigerante 2L" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="bebida1-sm.webp"><source type="image/webp" srcset="bebida1.webp"><img src="bebida1.jpg" alt="Refrigerante 2L" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Refrigerante 2L</h3>
         <div class="rating">⭐⭐⭐⭐ (156)</div>
         <p>R$ 10,00</p>
@@ -318,7 +319,7 @@
       </div>
 
       <div class="card" data-category="bebidas">
-        <img src="bebida2.jpg" alt="Suco Natural" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="bebida2-sm.webp"><source type="image/webp" srcset="bebida2.webp"><img src="bebida2.jpg" alt="Suco Natural" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Suco Natural</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (234)</div>
         <p>R$ 8,00</p>
@@ -330,7 +331,7 @@
       </div>
 
       <div class="card" data-category="bebidas">
-        <img src="bebida3.jpg" alt="Cerveja Artesanal" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="bebida3-sm.webp"><source type="image/webp" srcset="bebida3.webp"><img src="bebida3.jpg" alt="Cerveja Artesanal" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Cerveja Artesanal</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (512)</div>
         <p>R$ 14,00</p>
@@ -342,7 +343,7 @@
       </div>
 
       <div class="card" data-category="bebidas">
-        <img src="bebida4.jpg" alt="Água com Gás" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="bebida4-sm.webp"><source type="image/webp" srcset="bebida4.webp"><img src="bebida4.jpg" alt="Água com Gás" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Água com Gás</h3>
         <div class="rating">⭐⭐⭐⭐ (98)</div>
         <p>R$ 5,00</p>
@@ -354,7 +355,7 @@
       </div>
 
       <div class="card" data-category="bebidas">
-        <img src="suco1.jpg" alt="Suco de Maçã" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="suco1-sm.webp"><source type="image/webp" srcset="suco1.webp"><img src="suco1.jpg" alt="Suco de Maçã" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Suco Natural de Maçã</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (167)</div>
         <p>R$ 10,00</p>
@@ -366,7 +367,7 @@
       </div>
 
       <div class="card" data-category="bebidas">
-        <img src="suco2.jpg" alt="Suco de Melancia" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="suco2-sm.webp"><source type="image/webp" srcset="suco2.webp"><img src="suco2.jpg" alt="Suco de Melancia" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Suco Natural de Melancia</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (189)</div>
         <p>R$ 9,00</p>
@@ -378,7 +379,7 @@
       </div>
 
       <div class="card" data-category="bebidas">
-        <img src="suco3.jpg" alt="Suco Green" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="suco3-sm.webp"><source type="image/webp" srcset="suco3.webp"><img src="suco3.jpg" alt="Suco Green" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Suco Green Premium</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (234)</div>
         <p>R$ 13,00</p>
@@ -390,7 +391,7 @@
       </div>
 
       <div class="card" data-category="bebidas">
-        <img src="gengibre.jpg" alt="Suco de Gengibre" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="gengibre-sm.webp"><source type="image/webp" srcset="gengibre.webp"><img src="gengibre.jpg" alt="Suco de Gengibre" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Suco com Gengibre e Limão</h3>
         <div class="rating">⭐⭐⭐⭐ (112)</div>
         <p>R$ 11,00</p>
@@ -410,7 +411,7 @@
     <div class="grid">
 
       <div class="card" data-category="acompanhamentos">
-        <img src="aneis.jpg" alt="Anéis de Cebola" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="aneis-sm.webp"><source type="image/webp" srcset="aneis.webp"><img src="aneis.jpg" alt="Anéis de Cebola" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Anéis de Cebola Crocantes</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (289)</div>
         <p>R$ 16,00</p>
@@ -422,7 +423,7 @@
       </div>
 
       <div class="card" data-category="acompanhamentos">
-        <img src="nuggets.jpg" alt="Nuggets de Frango" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="nuggets-sm.webp"><source type="image/webp" srcset="nuggets.webp"><img src="nuggets.jpg" alt="Nuggets de Frango" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Nuggets de Frango</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (412)</div>
         <p>R$ 18,00</p>
@@ -434,7 +435,7 @@
       </div>
 
       <div class="card" data-category="acompanhamentos">
-        <img src="asas.jpg" alt="Asas de Frango" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="asas-sm.webp"><source type="image/webp" srcset="asas.webp"><img src="asas.jpg" alt="Asas de Frango" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Asas de Frango à Búfalo</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (367)</div>
         <p>R$ 20,00</p>
@@ -446,7 +447,7 @@
       </div>
 
       <div class="card" data-category="acompanhamentos">
-        <img src="tiras.jpg" alt="Tiras de Frango" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="tiras-sm.webp"><source type="image/webp" srcset="tiras.webp"><img src="tiras.jpg" alt="Tiras de Frango" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Tiras de Frango Crocantes</h3>
         <div class="rating">⭐⭐⭐⭐ (298)</div>
         <p>R$ 19,00</p>
@@ -458,7 +459,7 @@
       </div>
 
       <div class="card" data-category="acompanhamentos">
-        <img src="popcorn.jpg" alt="Popcorn de Frango" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="popcorn-sm.webp"><source type="image/webp" srcset="popcorn.webp"><img src="popcorn.jpg" alt="Popcorn de Frango" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Popcorn de Frango</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (345)</div>
         <p>R$ 17,00</p>
@@ -470,7 +471,7 @@
       </div>
 
       <div class="card" data-category="acompanhamentos">
-        <img src="linguica.jpg" alt="Linguiça Calabresa" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="linguica-sm.webp"><source type="image/webp" srcset="linguica.webp"><img src="linguica.jpg" alt="Linguiça Calabresa" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Linguiça Calabresa Grelhada</h3>
         <div class="rating">⭐⭐⭐⭐ (201)</div>
         <p>R$ 15,00</p>
@@ -482,7 +483,7 @@
       </div>
 
       <div class="card" data-category="acompanhamentos">
-        <img src="batata-ondulada.jpg" alt="Batata Ondulada" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="batata-ondulada-sm.webp"><source type="image/webp" srcset="batata-ondulada.webp"><img src="batata-ondulada.jpg" alt="Batata Ondulada" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Batata Ondulada Crocante</h3>
         <div class="rating">⭐⭐⭐⭐ (156)</div>
         <p>R$ 14,00</p>
@@ -494,7 +495,7 @@
       </div>
 
       <div class="card" data-category="acompanhamentos">
-        <img src="calabresa.jpg" alt="Batata com Calabresa" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="calabresa-sm.webp"><source type="image/webp" srcset="calabresa.webp"><img src="calabresa.jpg" alt="Batata com Calabresa" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Batata com Calabresa</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (223)</div>
         <p>R$ 19,00</p>
@@ -514,7 +515,7 @@
     <div class="grid">
 
       <div class="card" data-category="sobremesas">
-        <img src="sobremesa1.jpg" alt="Brownie Quente" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="sobremesa1-sm.webp"><source type="image/webp" srcset="sobremesa1.webp"><img src="sobremesa1.jpg" alt="Brownie Quente" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Brownie Quente</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (445)</div>
         <p>R$ 16,00</p>
@@ -526,7 +527,7 @@
       </div>
 
       <div class="card" data-category="sobremesas">
-        <img src="sobremesa2.jpg" alt="Milkshake" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="sobremesa2-sm.webp"><source type="image/webp" srcset="sobremesa2.webp"><img src="sobremesa2.jpg" alt="Milkshake" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Milkshake</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (678)</div>
         <p>R$ 14,00</p>
@@ -538,7 +539,7 @@
       </div>
 
       <div class="card" data-category="sobremesas">
-        <img src="sobremesa3.jpg" alt="Sorvete Premium" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="sobremesa3-sm.webp"><source type="image/webp" srcset="sobremesa3.webp"><img src="sobremesa3.jpg" alt="Sorvete Premium" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Sorvete Premium</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (823)</div>
         <p>R$ 12,00</p>
@@ -550,7 +551,7 @@
       </div>
 
       <div class="card" data-category="sobremesas">
-        <img src="sobremesa4.jpg" alt="Cheesecake" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="sobremesa4-sm.webp"><source type="image/webp" srcset="sobremesa4.webp"><img src="sobremesa4.jpg" alt="Cheesecake" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Cheesecake</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (567)</div>
         <p>R$ 18,00</p>
@@ -562,7 +563,7 @@
       </div>
 
       <div class="card" data-category="sobremesas">
-        <img src="pudim.jpg" alt="Pudim de Leite Condensado" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="pudim-sm.webp"><source type="image/webp" srcset="pudim.webp"><img src="pudim.jpg" alt="Pudim de Leite Condensado" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Pudim de Leite Condensado</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (612)</div>
         <p>R$ 15,00</p>
@@ -574,7 +575,7 @@
       </div>
 
       <div class="card" data-category="sobremesas">
-        <img src="beijinho.jpg" alt="Beijinhos de Chocolate" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="beijinho-sm.webp"><source type="image/webp" srcset="beijinho.webp"><img src="beijinho.jpg" alt="Beijinhos de Chocolate" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Beijinhos de Chocolate</h3>
         <div class="rating">⭐⭐⭐⭐ (345)</div>
         <p>R$ 12,00</p>
@@ -586,7 +587,7 @@
       </div>
 
       <div class="card" data-category="sobremesas">
-        <img src="tiramissu.jpg" alt="Tiramissu" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="tiramissu-sm.webp"><source type="image/webp" srcset="tiramissu.webp"><img src="tiramissu.jpg" alt="Tiramissu" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Tiramissu Italiano</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (489)</div>
         <p>R$ 20,00</p>
@@ -598,7 +599,7 @@
       </div>
 
       <div class="card" data-category="sobremesas">
-        <img src="pavê.jpg" alt="Pavê de Chocolate" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="pavê-sm.webp"><source type="image/webp" srcset="pavê.webp"><img src="pavê.jpg" alt="Pavê de Chocolate" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Pavê de Chocolate</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (578)</div>
         <p>R$ 17,00</p>
@@ -619,7 +620,7 @@
 
       <div class="card promocao" data-category="promocoes">
         <div class="destaque-badge">🔥 -20%</div>
-        <img src="combo1.jpg" alt="Combo Família" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="combo1-sm.webp"><source type="image/webp" srcset="combo1.webp"><img src="combo1.jpg" alt="Combo Família" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Combo Família</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (445)</div>
         <p class="preco-original">R$ 120,00</p>
@@ -633,7 +634,7 @@
 
       <div class="card promocao" data-category="promocoes">
         <div class="destaque-badge">⚡ -15%</div>
-        <img src="combo2.jpg" alt="Combo Casal" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="combo2-sm.webp"><source type="image/webp" srcset="combo2.webp"><img src="combo2.jpg" alt="Combo Casal" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Combo Casal</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (678)</div>
         <p class="preco-original">R$ 75,00</p>
@@ -647,7 +648,7 @@
 
       <div class="card promocao" data-category="promocoes">
         <div class="destaque-badge">💥 -10%</div>
-        <img src="combo4.jpg" alt="Combo Monster" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="combo4-sm.webp"><source type="image/webp" srcset="combo4.webp"><img src="combo4.jpg" alt="Combo Monster" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Combo Monster</h3>
         <div class="rating">⭐⭐⭐⭐ (234)</div>
         <p class="preco-original">R$ 170,00</p>
@@ -661,7 +662,7 @@
 
       <div class="card promocao" data-category="promocoes">
         <div class="destaque-badge">🔥 -25%</div>
-        <img src="combo5.jpg" alt="Combo Kids" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="combo5-sm.webp"><source type="image/webp" srcset="combo5.webp"><img src="combo5.jpg" alt="Combo Kids" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Combo Kids</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (512)</div>
         <p class="preco-original">R$ 150,00</p>
@@ -675,7 +676,7 @@
 
       <div class="card promocao" data-category="promocoes">
         <div class="destaque-badge">💳 Vale</div>
-        <img src="combo3.jpg" alt="Combo Solo" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="combo3-sm.webp"><source type="image/webp" srcset="combo3.webp"><img src="combo3.jpg" alt="Combo Solo" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Combo Solo</h3>
         <div class="rating">⭐⭐⭐⭐ (234)</div>
         <p class="preco-original">R$ 45,00</p>
@@ -696,7 +697,7 @@
     <div class="grid">
 
       <div class="card" data-category="acai">
-        <img src="acai1.jpg" alt="Açaí Morango" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="acai1-sm.webp"><source type="image/webp" srcset="acai1.webp"><img src="acai1.jpg" alt="Açaí Morango" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Açaí Morango</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (567)</div>
         <p>R$ 18,00</p>
@@ -708,7 +709,7 @@
       </div>
 
       <div class="card" data-category="acai">
-        <img src="acai2.jpg" alt="Açaí Banana" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="acai2-sm.webp"><source type="image/webp" srcset="acai2.webp"><img src="acai2.jpg" alt="Açaí Banana" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Açaí Banana</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (634)</div>
         <p>R$ 17,00</p>
@@ -720,7 +721,7 @@
       </div>
 
       <div class="card" data-category="acai">
-        <img src="acai3.jpg" alt="Açaí Tropical" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="acai3-sm.webp"><source type="image/webp" srcset="acai3.webp"><img src="acai3.jpg" alt="Açaí Tropical" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Açaí Tropical</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (789)</div>
         <p>R$ 20,00</p>
@@ -732,7 +733,7 @@
       </div>
 
       <div class="card" data-category="acai">
-        <img src="acai4.jpg" alt="Açaí Chocolate" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="acai4-sm.webp"><source type="image/webp" srcset="acai4.webp"><img src="acai4.jpg" alt="Açaí Chocolate" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Açaí Chocolate</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (456)</div>
         <p>R$ 19,00</p>
@@ -744,7 +745,7 @@
       </div>
 
       <div class="card" data-category="acai">
-        <img src="acai5.jpg" alt="Açaí Mirtilo" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="acai5-sm.webp"><source type="image/webp" srcset="acai5.webp"><img src="acai5.jpg" alt="Açaí Mirtilo" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Açaí Mirtilo</h3>
         <div class="rating">⭐⭐⭐⭐ (512)</div>
         <p>R$ 19,00</p>
@@ -756,7 +757,7 @@
       </div>
 
       <div class="card" data-category="acai">
-        <img src="acai6.jpg" alt="Açaí Premium" loading="lazy">
+        <picture><source type="image/webp" media="(max-width: 480px)" srcset="acai6-sm.webp"><source type="image/webp" srcset="acai6.webp"><img src="acai6.jpg" alt="Açaí Premium" loading="lazy" decoding="async" width="400" height="240" sizes="(max-width: 480px) 50vw, (max-width: 768px) 45vw, 320px"></picture>
         <h3>Açaí Premium</h3>
         <div class="rating">⭐⭐⭐⭐⭐ (723)</div>
         <p>R$ 24,00</p>
@@ -856,21 +857,21 @@
 </div>
 
 <!-- MODAL DE LOGIN -->
-<div id="loginModal" class="modal">
+<div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-login">
   <div class="modal-content">
-    <span class="close" onclick="fecharLogin()">&times;</span>
-    <h2>👤 Fazer Login</h2>
+    <span class="close" onclick="fecharLogin()" aria-label="Fechar">&times;</span>
+    <h2 id="titulo-modal-login">👤 Fazer Login</h2>
     
     <div class="modal-tabs">
-      <button class="tab-btn active" onclick="abrirAba('login')">Login</button>
-      <button class="tab-btn" onclick="abrirAba('cadastro')">Cadastro</button>
+      <button type="button" class="tab-btn active" onclick="abrirAba('login', this)">Login</button>
+      <button type="button" class="tab-btn" onclick="abrirAba('cadastro', this)">Cadastro</button>
     </div>
 
     <div id="aba-login" class="tab-content active">
       <input type="email" id="emailLogin" placeholder="Email" class="modal-input">
       <input type="password" id="senhaLogin" placeholder="Senha" class="modal-input">
       <button onclick="fazerLogin()" class="btn">Entrar</button>
-      <a href="#" class="link-pequeno">Esqueceu a senha?</a>
+      <a href="#contato" class="link-pequeno">Esqueceu a senha?</a>
     </div>
 
     <div id="aba-cadastro" class="tab-content">
@@ -885,10 +886,10 @@
 </div>
 
 <!-- MODAL DE PEDIDO -->
-<div id="pedidoModal" class="modal">
+<div id="pedidoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-pedido">
   <div class="modal-content modal-pedido">
-    <span class="close" onclick="fecharModal()">&times;</span>
-    <h2>📦 Resumo do Pedido</h2>
+    <span class="close" onclick="fecharModal()" aria-label="Fechar">&times;</span>
+    <h2 id="titulo-modal-pedido">📦 Resumo do Pedido</h2>
 
     <!-- DADOS PESSOAIS -->
     <div class="modal-section">
@@ -1005,10 +1006,10 @@
 </div>
 
 <!-- MODAL DE AVALIAÇÃO -->
-<div id="avaliacaoModal" class="modal">
+<div id="avaliacaoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-avaliacao">
   <div class="modal-content">
-    <span class="close" onclick="fecharAvaliacaoModal()">&times;</span>
-    <h2>⭐ Deixe sua Avaliação</h2>
+    <span class="close" onclick="fecharAvaliacaoModal()" aria-label="Fechar">&times;</span>
+    <h2 id="titulo-modal-avaliacao">⭐ Deixe sua Avaliação</h2>
     
     <input type="text" id="nomeAvaliacao" placeholder="Seu nome" class="modal-input">
     <textarea id="textoAvaliacao" placeholder="Sua opinião sobre o pedido..." class="modal-textarea"></textarea>
@@ -1016,11 +1017,11 @@
     <div class="rating-selector">
       <p>Nota:</p>
       <div class="stars">
-        <button onclick="selecionarEstrela(1)" class="star">⭐</button>
-        <button onclick="selecionarEstrela(2)" class="star">⭐</button>
-        <button onclick="selecionarEstrela(3)" class="star">⭐</button>
-        <button onclick="selecionarEstrela(4)" class="star">⭐</button>
-        <button onclick="selecionarEstrela(5)" class="star">⭐</button>
+        <button type="button" onclick="selecionarEstrela(1)" class="star" aria-label="1 estrela">⭐</button>
+        <button type="button" onclick="selecionarEstrela(2)" class="star" aria-label="2 estrelas">⭐</button>
+        <button type="button" onclick="selecionarEstrela(3)" class="star" aria-label="3 estrelas">⭐</button>
+        <button type="button" onclick="selecionarEstrela(4)" class="star" aria-label="4 estrelas">⭐</button>
+        <button type="button" onclick="selecionarEstrela(5)" class="star" aria-label="5 estrelas">⭐</button>
       </div>
     </div>
 
@@ -1036,9 +1037,9 @@
       <p>A melhor experiência em hambúrgueres premium direto na sua casa.</p>
       <div class="social">
         <a href="https://wa.me/5591992556490" target="_blank">🟢</a>
-        <a href="#" target="_blank">📘</a>
-        <a href="#" target="_blank">📷</a>
-        <a href="#" target="_blank">🐦</a>
+        <a href="#contato" aria-label="Facebook — em breve">📘</a>
+        <a href="#contato" aria-label="Instagram — em breve">📷</a>
+        <a href="#contato" aria-label="Twitter — em breve">🐦</a>
       </div>
     </div>
 
@@ -1055,10 +1056,10 @@
     <div class="footer-box">
       <h3>Atendimento</h3>
       <ul>
-        <li><a href="#">Rastrear Pedido</a></li>
-        <li><a href="#">Política de Privacidade</a></li>
-        <li><a href="#">Termos de Uso</a></li>
-        <li><a href="#">Fale Conosco</a></li>
+        <li><button type="button" class="footer-link-btn" onclick="abrirRastreamento()">Rastrear Pedido</button></li>
+        <li><a href="#contato">Política de Privacidade</a></li>
+        <li><a href="#contato">Termos de Uso</a></li>
+        <li><a href="#contato">Fale Conosco</a></li>
       </ul>
     </div>
 

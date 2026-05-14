@@ -5,7 +5,6 @@ let usuario = JSON.parse(localStorage.getItem("usuario")) || null;
 let historialPedidos = JSON.parse(localStorage.getItem("historialPedidos")) || [];
 let enderecosSalvos = JSON.parse(localStorage.getItem("enderecosSalvos")) || [];
 let pontosFidelidade = JSON.parse(localStorage.getItem("pontosFidelidade")) || { total: 0, nivel: "Bronze" };
-let metodoPagamentoSalvo = JSON.parse(localStorage.getItem("metodoPagamentoSalvo")) || null;
 
 let total = 0;
 let desconto = 0;
@@ -13,34 +12,47 @@ let taxaEntrega = 0;
 
 const NUMERO_WHATSAPP = "5591992556490";
 
-// ============ OTIMIZAÇÕES DE PERFORMANCE ============
-// Debounce para eventos de scroll
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
+const HERO_VIDEO_SRC = "video.mp4";
+
+/** Vídeo só em telas maiores: em ≤768px remove fonte MP4 (economia de rede/CPU) e usa poster + fundo CSS. */
+function initHeroVideoLeveMobile() {
+  const video = document.getElementById("heroVideo");
+  if (!video) return;
+  const mq = window.matchMedia("(max-width: 768px)");
+  function apply() {
+    if (mq.matches) {
+      video.querySelectorAll("source").forEach((s) => s.remove());
+      video.pause();
+      video.removeAttribute("src");
+      video.preload = "none";
+      video.load();
+    } else {
+      if (!video.querySelector("source")) {
+        const s = document.createElement("source");
+        s.src = HERO_VIDEO_SRC;
+        s.type = "video/mp4";
+        video.insertBefore(s, video.firstChild);
+      }
+      video.preload = "metadata";
+      video.load();
+      const playAttempt = video.play();
+      if (playAttempt && typeof playAttempt.catch === "function") {
+        playAttempt.catch(() => {});
+      }
+    }
+  }
+  apply();
+  mq.addEventListener("change", apply);
 }
 
-// Lazy loading com Intersection Observer
-if ('IntersectionObserver' in window) {
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        img.src = img.dataset.src || img.src;
-        observer.unobserve(img);
-      }
-    });
-  });
-  
-  document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-    imageObserver.observe(img);
+function scrollParaMenuCardapio() {
+  const el = document.getElementById("menu");
+  if (!el) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mobile = window.matchMedia("(max-width: 768px)").matches;
+  el.scrollIntoView({
+    behavior: reduce || mobile ? "auto" : "smooth",
+    block: "start",
   });
 }
 
@@ -53,9 +65,52 @@ const cuponsDisponiveis = {
 };
 
 // ============ INICIALIZAÇÃO ============
-document.addEventListener('DOMContentLoaded', function() {
+function initBackdropFecharModais() {
+  const loginModal = document.getElementById("loginModal");
+  const pedidoModal = document.getElementById("pedidoModal");
+  const avaliacaoModal = document.getElementById("avaliacaoModal");
+
+  if (loginModal) {
+    loginModal.addEventListener("click", function (event) {
+      if (event.target === loginModal) fecharLogin();
+    });
+  }
+  if (pedidoModal) {
+    pedidoModal.addEventListener("click", function (event) {
+      if (event.target === pedidoModal) fecharModal();
+    });
+  }
+  if (avaliacaoModal) {
+    avaliacaoModal.addEventListener("click", function (event) {
+      if (event.target === avaliacaoModal) fecharAvaliacaoModal();
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  initHeroVideoLeveMobile();
   atualizarCarrinho();
   aplicarEstrelas();
+
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") buscarProduto();
+    });
+  }
+
+  initBackdropFecharModais();
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape") return;
+    document.querySelectorAll(".modal-dinamico").forEach((m) => m.remove());
+    const loginModal = document.getElementById("loginModal");
+    const pedidoModal = document.getElementById("pedidoModal");
+    const avaliacaoModal = document.getElementById("avaliacaoModal");
+    if (loginModal) loginModal.style.display = "none";
+    if (pedidoModal) pedidoModal.style.display = "none";
+    if (avaliacaoModal) avaliacaoModal.style.display = "none";
+  });
 });
 
 // ============ CARRINHO ============
@@ -67,7 +122,6 @@ function addCarrinho(nome, preco, rating = 4) {
     quantidade: 1,
     id: Date.now()
   });
-  total += preco;
   atualizarCarrinho();
   mostrarNotificacao(`✅ ${nome} adicionado ao carrinho!`);
 }
@@ -90,7 +144,7 @@ function atualizarCarrinho() {
         <div>${item.nome}</div>
         <div style="font-size: 0.8rem; color: #ff9500;">R$ ${item.preco.toFixed(2)}</div>
       </div>
-      <button onclick="removerItem(${index})" style="min-width: 30px;">🗑️</button>
+      <button type="button" onclick="removerItem(${index})" style="min-width: 30px;" aria-label="Remover item do carrinho">🗑️</button>
     `;
     lista.appendChild(li);
   });
@@ -112,7 +166,6 @@ function removerItem(index) {
     itemEl.classList.add("removing");
 
     setTimeout(() => {
-      total -= carrinho[index].preco;
       carrinho.splice(index, 1);
       atualizarCarrinho();
     }, 300);
@@ -136,20 +189,21 @@ function adicionarFavorito(nome, preco) {
 
 // ============ BUSCA ============
 function buscarProduto() {
-  const termo = document.getElementById("searchInput").value.toLowerCase();
-  
+  const raw = document.getElementById("searchInput").value;
+  const termo = raw.trim().toLowerCase();
+  const cards = document.querySelectorAll(".card");
+
   if (!termo) {
-    mostrarNotificacao("Digite um produto para buscar");
+    cards.forEach((card) => card.style.removeProperty("display"));
     return;
   }
 
-  const cards = document.querySelectorAll(".card");
   let encontrados = 0;
 
-  cards.forEach(card => {
+  cards.forEach((card) => {
     const titulo = card.querySelector("h3").textContent.toLowerCase();
     if (titulo.includes(termo)) {
-      card.style.display = "block";
+      card.style.removeProperty("display");
       encontrados++;
     } else {
       card.style.display = "none";
@@ -157,28 +211,19 @@ function buscarProduto() {
   });
 
   if (encontrados === 0) {
-    mostrarNotificacao(`❌ Nenhum produto encontrado para "${termo}"`);
+    mostrarNotificacao(`❌ Nenhum produto encontrado para "${raw.trim()}"`);
   } else {
     mostrarNotificacao(`🔍 ${encontrados} produto(s) encontrado(s)`);
   }
 }
 
-// Busca ao pressionar Enter
-document.addEventListener('DOMContentLoaded', function() {
-  const searchInput = document.getElementById("searchInput");
-  if (searchInput) {
-    searchInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') buscarProduto();
-    });
-  }
-});
-
 // ============ FILTROS ============
-function filtrarCategoria(categoria) {
-  // Atualizar botões ativos
+function filtrarCategoria(categoria, btnEl) {
   const buttons = document.querySelectorAll(".filter-btn");
-  buttons.forEach(btn => btn.classList.remove("active"));
-  event.target.classList.add("active");
+  buttons.forEach((btn) => btn.classList.remove("active"));
+  if (btnEl && btnEl.classList.contains("filter-btn")) {
+    btnEl.classList.add("active");
+  }
 
   // Mostrar/ocultar categorias
   const categorias = document.querySelectorAll(".categoria");
@@ -213,12 +258,14 @@ function fecharLogin() {
   limparAbasLogin();
 }
 
-function abrirAba(aba) {
-  document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
-  document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
-  
+function abrirAba(aba, btnEl) {
+  document.querySelectorAll(".tab-content").forEach((el) => el.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach((el) => el.classList.remove("active"));
+
   document.getElementById(`aba-${aba}`).classList.add("active");
-  event.target.classList.add("active");
+  if (btnEl && btnEl.classList.contains("tab-btn")) {
+    btnEl.classList.add("active");
+  }
 }
 
 function fazerLogin() {
@@ -226,7 +273,7 @@ function fazerLogin() {
   const senha = document.getElementById("senhaLogin").value;
 
   if (!email || !senha) {
-    alert("Preencha todos os campos!");
+    mostrarNotificacao("Preencha todos os campos do login.");
     return;
   }
 
@@ -249,12 +296,12 @@ function fazerRegistro() {
   const senhaConfirm = document.getElementById("senhaConfirm").value;
 
   if (!nome || !email || !tele || !senha || !senhaConfirm) {
-    alert("Preencha todos os campos!");
+    mostrarNotificacao("Preencha todos os campos do cadastro.");
     return;
   }
 
   if (senha !== senhaConfirm) {
-    alert("As senhas não conferem!");
+    mostrarNotificacao("As senhas não conferem.");
     return;
   }
 
@@ -329,7 +376,7 @@ function calcularEntrega() {
   const bairro = document.getElementById("bairro").value;
   
   if (!bairro) {
-    alert("Digite o bairro!");
+    mostrarNotificacao("Digite o bairro para calcular a entrega.");
     return;
   }
 
@@ -431,12 +478,12 @@ function enviarWhats() {
   let obs = document.getElementById("obs").value;
 
   if (!nome || !telefone || !endereco || !bairro || !numero || !pagamento) {
-    alert("Preencha os campos obrigatórios!");
+    mostrarNotificacao("Preencha os campos obrigatórios do pedido.");
     return;
   }
 
   if (carrinho.length === 0) {
-    alert("Adicione itens ao carrinho!");
+    mostrarNotificacao("Adicione itens ao carrinho.");
     return;
   }
 
@@ -567,7 +614,7 @@ function enviarAvaliacao() {
   const texto = document.getElementById("textoAvaliacao").value;
 
   if (!nome || !texto || estrelasSelecionadas === 0) {
-    alert("Preencha todos os campos e selecione uma nota!");
+    mostrarNotificacao("Preencha todos os campos e selecione uma nota.");
     return;
   }
 
@@ -599,8 +646,9 @@ function aplicarEstrelas() {
 
 // ============ NOTIFICAÇÕES ============
 function mostrarNotificacao(mensagem) {
-  // Criar elemento de notificação
   const notif = document.createElement("div");
+  notif.setAttribute("role", "status");
+  notif.setAttribute("aria-live", "polite");
   notif.style.cssText = `
     position: fixed;
     top: 20px;
@@ -611,52 +659,23 @@ function mostrarNotificacao(mensagem) {
     border-radius: 8px;
     border-left: 4px solid orange;
     z-index: 1000;
-    animation: slideIn 0.3s ease-out;
+    animation: notifEntrada 0.3s ease-out;
     max-width: 300px;
   `;
   notif.textContent = mensagem;
   document.body.appendChild(notif);
 
   setTimeout(() => {
-    notif.style.animation = "slideOut 0.3s ease-out";
+    notif.style.animation = "notifSaida 0.3s ease-out forwards";
     setTimeout(() => notif.remove(), 300);
   }, 3000);
 }
 
-// ============ FECHAR MODAIS CLICANDO FORA ============
-window.onclick = function(event) {
-  const loginModal = document.getElementById("loginModal");
-  const pedidoModal = document.getElementById("pedidoModal");
-  const avaliacaoModal = document.getElementById("avaliacaoModal");
-
-  if (event.target === loginModal) {
-    loginModal.style.display = "none";
-  }
-  if (event.target === pedidoModal) {
-    pedidoModal.style.display = "none";
-  }
-  if (event.target === avaliacaoModal) {
-    avaliacaoModal.style.display = "none";
-  }
-};
-
-// ============ ATALHOS DE TECLADO ============
-document.addEventListener('keydown', function(event) {
-  if (event.key === 'Escape') {
-    document.getElementById("loginModal").style.display = "none";
-    document.getElementById("pedidoModal").style.display = "none";
-    document.getElementById("avaliacaoModal").style.display = "none";
-  }
-});
-
 // ============ CARREGAR DADOS INICIAIS ============
-window.addEventListener('load', function() {
+window.addEventListener("load", function () {
   atualizarCarrinho();
   verificarStatusLoja();
   atualizarPontosFidelidade();
-  if (usuario) {
-    console.log(`Usuário logado: ${usuario.nome}`);
-  }
 });
 
 // ============ SISTEMA DE PONTOS DE FIDELIDADE ============
@@ -736,7 +755,7 @@ function listarEnderecosSalvos() {
   enderecosSalvos.forEach(end => {
     html += `<div style="padding: 10px; border: 1px solid #444; margin: 5px 0; border-radius: 5px; cursor: pointer;" onclick="carregarEnderecoSalvo(${end.id})">
       ${end.endereco}, ${end.numero} - ${end.bairro}
-      <button onclick="removerEndereco(${end.id})" style="float: right; background: #c00; color: white; border: none; padding: 3px 8px; border-radius: 3px; cursor: pointer;">Remover</button>
+      <button type="button" onclick="event.stopPropagation(); removerEndereco(${end.id})" style="float: right; background: #c00; color: white; border: none; padding: 3px 8px; border-radius: 3px; cursor: pointer;">Remover</button>
     </div>`;
   });
   
@@ -746,6 +765,10 @@ function listarEnderecosSalvos() {
 function removerEndereco(id) {
   enderecosSalvos = enderecosSalvos.filter(e => e.id !== id);
   localStorage.setItem("enderecosSalvos", JSON.stringify(enderecosSalvos));
+  const listEl = document.getElementById("enderecos-salvos-list");
+  if (listEl) {
+    listEl.innerHTML = listarEnderecosSalvos();
+  }
   mostrarNotificacao("❌ Endereço removido!");
 }
 
@@ -758,7 +781,7 @@ function abrirUltimoPedido() {
   
   const ultimoPedido = historialPedidos[historialPedidos.length - 1];
   const modal = document.createElement("div");
-  modal.className = "modal";
+  modal.className = "modal modal-dinamico";
   modal.style.display = "flex";
   
   let itensHtml = "";
@@ -806,7 +829,7 @@ function repetiUltimoPedido() {
   });
   
   atualizarCarrinho();
-  document.querySelectorAll(".modal").forEach(m => m.remove());
+  document.querySelectorAll(".modal-dinamico").forEach((m) => m.remove());
   mostrarNotificacao("🔄 Itens do último pedido adicionados ao carrinho!");
 }
 
@@ -844,7 +867,7 @@ function abrirRastreamento() {
   }
   
   const modal = document.createElement("div");
-  modal.className = "modal";
+  modal.className = "modal modal-dinamico";
   modal.style.display = "flex";
   
   let conteudo = "<h2>📦 Rastreamento de Pedidos</h2>";
