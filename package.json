@@ -1,0 +1,11 @@
+{
+  "name": "noir-burgers-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:images": "node scripts/build-webp.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5"
+  }
+}
