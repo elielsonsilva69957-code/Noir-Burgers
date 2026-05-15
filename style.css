@@ -24,6 +24,8 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
 }
 
 /* HEADER MELHORADO */
@@ -31,6 +33,7 @@ header {
   display: flex;
   justify-content: space-between;
   padding: 15px 30px;
+  padding-top: max(15px, env(safe-area-inset-top, 0px));
   background: rgba(0, 0, 0, 0.95);
   color: white;
   align-items: center;
@@ -40,6 +43,7 @@ header {
   box-shadow: 0 2px 10px rgba(255, 165, 0, 0.3);
   flex-wrap: wrap;
   gap: 10px;
+  transition: box-shadow 0.22s ease, background-color 0.22s ease;
 }
 
 .header-left h1 {
@@ -57,7 +61,7 @@ nav {
 nav a {
   color: white;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, background-color 0.18s ease, transform 0.18s ease;
   font-weight: 500;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -318,7 +322,7 @@ nav a:hover {
   background: #1a1a1a;
   padding: 15px;
   border-radius: 15px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.18s ease;
   cursor: pointer;
   border: 2px solid transparent;
   position: relative;
@@ -327,6 +331,7 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   height: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -338,6 +343,18 @@ nav a:hover {
     transform: translateY(-6px);
     box-shadow: 0 12px 32px rgba(255, 165, 0, 0.28);
     border-color: orange;
+  }
+}
+
+@media (pointer: coarse) {
+  .card:active {
+    transform: scale(0.987);
+    border-color: rgba(255, 165, 0, 0.45);
+  }
+
+  .card.destaque:active,
+  .card.promocao:active {
+    transform: scale(0.985);
   }
 }
 
@@ -414,8 +431,10 @@ nav a:hover {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.16s ease;
   font-weight: bold;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .card-options button:first-child {
@@ -567,7 +586,7 @@ nav a:hover {
   position: fixed;
   right: 30px;
   bottom: 20px;
-  background: #1a1a1a;
+  background: #141414;
   padding: 20px;
   border-radius: 15px;
   width: 300px;
@@ -578,12 +597,25 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   z-index: 50;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.cart-toggle {
+  display: none;
+}
+
+.cart-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 .cart-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   margin-bottom: 15px;
   border-bottom: 2px solid orange;
   padding-bottom: 10px;
@@ -591,6 +623,23 @@ nav a:hover {
 
 .cart-header h3 {
   margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-header-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cart-inline-total {
+  display: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffb347;
+  white-space: nowrap;
 }
 
 .contador {
@@ -608,6 +657,8 @@ nav a:hover {
   overflow-y: auto;
   font-size: 0.9rem;
   margin-bottom: 15px;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: auto;
 }
 
 .cart li {
@@ -619,7 +670,7 @@ nav a:hover {
   padding: 8px;
   background: #0f0f0f;
   border-radius: 8px;
-  transition: 0.2s;
+  transition: background-color 0.2s ease, opacity 0.22s ease, transform 0.22s ease;
 }
 
 .cart li:hover {
@@ -637,16 +688,24 @@ nav a:hover {
   background: transparent;
   border: 1px solid #ff4d4d;
   color: #ff4d4d;
-  padding: 3px 8px;
+  padding: 6px 10px;
   cursor: pointer;
   border-radius: 6px;
   font-size: 0.8rem;
-  transition: 0.2s;
+  transition: background-color 0.18s ease, color 0.18s ease, transform 0.16s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 40px;
+  min-height: 40px;
 }
 
 .cart li button:hover {
   background: #ff4d4d;
   color: white;
+}
+
+.cart li button:active {
+  transform: scale(0.94);
 }
 
 .cart-totals {
@@ -655,6 +714,7 @@ nav a:hover {
   border-radius: 8px;
   margin-bottom: 12px;
   border-left: 3px solid orange;
+  transition: opacity 0.2s ease;
 }
 
 .total-line {
@@ -679,11 +739,18 @@ nav a:hover {
   cursor: pointer;
   font-weight: bold;
   color: black;
-  transition: 0.3s;
+  transition: background-color 0.2s ease, transform 0.16s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 48px;
 }
 
 .btn-checkout:hover {
   background: #ff8c00;
+}
+
+.btn-checkout:active {
+  transform: scale(0.98);
 }
 
 /* MODAL */
@@ -737,22 +804,52 @@ nav a:hover {
 @keyframes notifEntrada {
   from {
     opacity: 0;
-    transform: translateX(24px);
+    transform: translate3d(12px, -6px, 0);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
-@keyframes notifSaida {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
+/* Toast / feedback (classe usada pelo JS — evita estilo inline pesado no mobile) */
+.app-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  left: auto;
+  background: #242424;
+  color: #f2f2f2;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border-left: 4px solid orange;
+  z-index: 1000;
+  max-width: min(340px, calc(100vw - 32px));
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  font-size: 0.95rem;
+  line-height: 1.35;
+  animation: notifEntrada 0.28s ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-toast.app-toast--out {
+  animation: appToastOut 0.26s ease-out forwards;
+}
+
+@keyframes appToastOut {
   to {
     opacity: 0;
-    transform: translateX(24px);
+  }
+}
+
+@keyframes modalSheetIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -1116,11 +1213,21 @@ nav a:hover {
 /* ANIMAÇÃO REMOVER ITEM */
 .cart li.removing {
   opacity: 0;
-  transform: translateX(50px);
+  transform: translate3d(16px, 0, 0);
+  pointer-events: none;
+}
+
+/* Micro-feedback ao trocar categoria (leve, sem reflow pesado) */
+#menu.is-filtering .grid {
+  opacity: 0.93;
+  transition: opacity 0.12s ease-out;
 }
 
 /* RESPONSIVO - TABLETS */
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: 100px;
+  }
   .hero {
     background-color: #0a0a0a;
     background-image: url("hero-poster.webp");
@@ -1148,6 +1255,7 @@ nav a:hover {
     flex-direction: column;
     gap: 15px;
     padding: 15px 20px;
+    padding-top: max(15px, env(safe-area-inset-top, 0px));
   }
 
   .header-right {
@@ -1194,6 +1302,7 @@ nav a:hover {
 
   .modal-content {
     width: 95%;
+    max-height: min(88dvh, 720px);
   }
 
   .filter-container {
@@ -1215,8 +1324,22 @@ nav a:hover {
 
 /* RESPONSIVO - CELULARES */
 @media (max-width: 480px) {
+  html {
+    scroll-padding-top: 92px;
+  }
+
+  body {
+    padding-bottom: calc(min(48vh, 280px) + env(safe-area-inset-bottom, 0px));
+    transition: padding-bottom 0.22s ease;
+  }
+
+  body.cart-sheet-collapsed {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  }
+
   header {
     padding: 8px 10px;
+    padding-top: max(8px, env(safe-area-inset-top, 0px));
     flex-direction: column;
     gap: 8px;
     position: sticky;
@@ -1234,22 +1357,39 @@ nav a:hover {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    gap: 4px;
+    gap: 6px;
     font-size: 0.7rem;
-    padding: 4px 0;
+    padding: 6px 2px;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
     scroll-behavior: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  nav::-webkit-scrollbar {
+    display: none;
+    height: 0;
   }
 
   nav a {
-    font-size: 0.65rem;
-    padding: 4px 8px;
+    font-size: 0.72rem;
+    padding: 8px 12px;
     border: none;
-    border-radius: 10px;
+    border-radius: 999px;
     white-space: nowrap;
     flex-shrink: 0;
     background: #1a1a1a;
+    scroll-snap-align: start;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  nav a:active {
+    background: #2a2a2a;
+    color: #ffb347;
   }
 
   #status-loja {
@@ -1371,6 +1511,11 @@ nav a:hover {
     padding: 8px 12px;
     font-size: 0.75rem;
     flex: 1;
+    transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .filter-btn:active {
+    transform: scale(0.98);
   }
 
   .categoria-title {
@@ -1400,26 +1545,89 @@ nav a:hover {
     position: fixed;
     right: 0;
     bottom: 0;
+    left: 0;
     width: 100%;
     max-width: 100%;
-    max-height: 50vh;
-    padding: 12px;
-    border-radius: 15px 15px 0 0;
+    max-height: min(52vh, 320px);
+    padding: 0 12px 12px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    border-radius: 16px 16px 0 0;
     border: 2px solid orange;
+    border-bottom: none;
     z-index: 99;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.55);
+    transition: max-height 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+  }
+
+  .cart-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 8px 0 4px;
+    margin: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .cart-sheet-handle {
+    display: block;
+    width: 36px;
+    height: 4px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .cart.cart--collapsed {
+    max-height: none;
+    padding-top: 4px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .cart.cart--collapsed .cart-body > #cart-items,
+  .cart.cart--collapsed .cart-body > .cart-totals,
+  .cart.cart--collapsed .cart-body > .btn-checkout {
+    display: none !important;
+  }
+
+  .cart.cart--collapsed .cart-header {
+    margin-bottom: 0;
+    padding-bottom: 4px;
+    border-bottom-color: rgba(255, 165, 0, 0.35);
+  }
+
+  .cart.cart--collapsed .cart-toggle {
+    padding-bottom: 8px;
+  }
+
+  .cart.cart--collapsed .cart-inline-total {
+    display: inline;
+  }
+
+  .cart.cart--collapsed .cart-toggle .cart-sheet-handle {
+    background: rgba(255, 165, 0, 0.45);
   }
 
   .cart-header {
     margin-bottom: 8px;
     padding-bottom: 8px;
+    cursor: default;
   }
 
   .cart-header h3 {
-    font-size: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .cart-inline-total {
+    font-size: 0.8rem;
   }
 
   #cart-items {
-    max-height: 150px;
+    max-height: min(28vh, 200px);
     overflow-y: auto;
     font-size: 0.8rem;
   }
@@ -1434,9 +1642,48 @@ nav a:hover {
   }
 
   .btn-checkout {
-    padding: 10px;
-    font-size: 0.85rem;
+    padding: 12px;
+    font-size: 0.88rem;
     margin-top: 8px;
+  }
+
+  .modal {
+    align-items: flex-end;
+    padding: 0 0 env(safe-area-inset-bottom, 0px);
+  }
+
+  .modal .modal-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 16px 16px 0 0;
+    max-height: min(92dvh, 720px);
+    animation: modalSheetIn 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    padding-bottom: max(20px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .app-toast {
+    top: auto;
+    right: 12px;
+    left: 12px;
+    bottom: calc(min(48vh, 280px) + 12px + env(safe-area-inset-bottom, 0px));
+    max-width: none;
+    animation: appToastInUp 0.28s ease-out;
+  }
+
+  body.cart-sheet-collapsed .app-toast {
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+
+  @keyframes appToastInUp {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 10px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
   }
 
   .filter-container {
@@ -1585,8 +1832,9 @@ nav a:hover {
     animation: none;
   }
 
+  .modal .modal-content,
   .modal-content {
-    animation: none;
+    animation: none !important;
   }
 
   .destaque-badge {
@@ -1594,6 +1842,19 @@ nav a:hover {
   }
 
   .card img {
+    animation: none !important;
+  }
+
+  .cart {
+    transition: none !important;
+  }
+
+  body {
+    transition: none !important;
+  }
+
+  .app-toast,
+  .app-toast.app-toast--out {
     animation: none !important;
   }
 }

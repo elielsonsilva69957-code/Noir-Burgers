@@ -87,8 +87,40 @@ function initBackdropFecharModais() {
   }
 }
 
+function initMobileCartPremium() {
+  const panel = document.getElementById("cartPanel");
+  const toggle = document.getElementById("cartToggle");
+  if (!panel || !toggle) return;
+
+  const mq = window.matchMedia("(max-width: 480px)");
+
+  function syncExpandedState(collapsed) {
+    toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+    document.body.classList.toggle("cart-sheet-collapsed", collapsed);
+  }
+
+  function leaveMobileLayout() {
+    panel.classList.remove("cart--collapsed");
+    document.body.classList.remove("cart-sheet-collapsed");
+    toggle.setAttribute("aria-expanded", "true");
+  }
+
+  mq.addEventListener("change", function () {
+    if (!mq.matches) leaveMobileLayout();
+  });
+  if (!mq.matches) leaveMobileLayout();
+
+  toggle.addEventListener("click", function (e) {
+    e.stopPropagation();
+    if (!mq.matches) return;
+    panel.classList.toggle("cart--collapsed");
+    syncExpandedState(panel.classList.contains("cart--collapsed"));
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   initHeroVideoLeveMobile();
+  initMobileCartPremium();
   atualizarCarrinho();
   aplicarEstrelas();
 
@@ -155,6 +187,12 @@ function atualizarCarrinho() {
   taxaEl.innerText = `R$ ${taxaEntrega.toFixed(2)}`;
   totalEl.innerText = `${totalComTaxa.toFixed(2)}`;
   contador.innerText = carrinho.length;
+
+  const inlineTotal = document.getElementById("cartInlineTotal");
+  if (inlineTotal) {
+    inlineTotal.textContent =
+      carrinho.length > 0 ? `R$ ${totalComTaxa.toFixed(2)}` : "";
+  }
 
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
@@ -241,6 +279,16 @@ function filtrarCategoria(categoria, btnEl) {
     if (catElement) {
       catElement.style.display = "block";
     }
+  }
+
+  const menuEl = document.getElementById("menu");
+  if (menuEl) {
+    menuEl.classList.add("is-filtering");
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        menuEl.classList.remove("is-filtering");
+      });
+    });
   }
 }
 
@@ -332,6 +380,14 @@ function abrirModal() {
   if (carrinho.length === 0) {
     mostrarNotificacao("🛒 Adicione itens ao carrinho!");
     return;
+  }
+
+  const cartPanel = document.getElementById("cartPanel");
+  if (cartPanel && cartPanel.classList.contains("cart--collapsed")) {
+    cartPanel.classList.remove("cart--collapsed");
+    document.body.classList.remove("cart-sheet-collapsed");
+    const tg = document.getElementById("cartToggle");
+    if (tg) tg.setAttribute("aria-expanded", "true");
   }
 
   if (usuario) {
@@ -649,25 +705,15 @@ function mostrarNotificacao(mensagem) {
   const notif = document.createElement("div");
   notif.setAttribute("role", "status");
   notif.setAttribute("aria-live", "polite");
-  notif.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #2a2a2a;
-    color: white;
-    padding: 15px 25px;
-    border-radius: 8px;
-    border-left: 4px solid orange;
-    z-index: 1000;
-    animation: notifEntrada 0.3s ease-out;
-    max-width: 300px;
-  `;
+  notif.className = "app-toast";
   notif.textContent = mensagem;
   document.body.appendChild(notif);
 
-  setTimeout(() => {
-    notif.style.animation = "notifSaida 0.3s ease-out forwards";
-    setTimeout(() => notif.remove(), 300);
+  setTimeout(function () {
+    notif.classList.add("app-toast--out");
+    setTimeout(function () {
+      notif.remove();
+    }, 280);
   }, 3000);
 }
 

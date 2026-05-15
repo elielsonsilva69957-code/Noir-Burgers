@@ -47,7 +47,7 @@
   <div class="overlay"></div>
 
   <div class="hero-content">
-    <h2><span>Noir</span> seu novo vício <span>Tem Nome</span></h2>
+    <h2>Sabor <span>Inesquecivel</span> onde cada<span> Mordida</span> é uma nova <span> Experiencia</span></h2>
     <p>Experiência gastronômica premium direto na sua casa</p>
     <button class="btn" onclick="scrollParaMenuCardapio()">Pedir agora</button>
   </div>
@@ -842,18 +842,26 @@
 
   
 <!-- CARRINHO FLUTUANTE -->
-<div class="cart">
-  <div class="cart-header">
-    <h3>🛒 Carrinho</h3>
-    <span class="contador" id="contador">0</span>
+<div class="cart" id="cartPanel">
+  <button type="button" class="cart-toggle" id="cartToggle" aria-expanded="true" aria-controls="cartBody" aria-label="Recolher ou expandir carrinho" title="Recolher ou expandir carrinho">
+    <span class="cart-sheet-handle" aria-hidden="true"></span>
+  </button>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-header">
+      <h3>🛒 Carrinho</h3>
+      <div class="cart-header-badges">
+        <span class="cart-inline-total" id="cartInlineTotal" aria-hidden="true"></span>
+        <span class="contador" id="contador">0</span>
+      </div>
+    </div>
+    <ul id="cart-items"></ul>
+    <div class="cart-totals">
+      <div class="total-line">Subtotal: <span id="subtotal">0</span></div>
+      <div class="total-line">Taxa: <span id="taxa">0</span></div>
+      <div class="total-line destaque">Total: <span id="total">0,00</span></div>
+    </div>
+    <button type="button" onclick="abrirModal()" class="btn-checkout">💳 Finalizar Pedido</button>
   </div>
-  <ul id="cart-items"></ul>
-  <div class="cart-totals">
-    <div class="total-line">Subtotal: <span id="subtotal">0</span></div>
-    <div class="total-line">Taxa: <span id="taxa">0</span></div>
-    <div class="total-line destaque">Total: <span id="total">0,00</span></div>
-  </div>
-  <button onclick="abrirModal()" class="btn-checkout">💳 Finalizar Pedido</button>
 </div>
 
 <!-- MODAL DE LOGIN -->
