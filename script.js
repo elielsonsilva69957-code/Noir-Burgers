@@ -164,6 +164,7 @@ function atualizarCarrinho() {
   const subtotalEl = document.getElementById("subtotal");
   const taxaEl = document.getElementById("taxa");
   const contador = document.getElementById("contador");
+  if (!lista || !totalEl || !subtotalEl || !taxaEl || !contador) return;
 
   lista.innerHTML = "";
   total = 0;
@@ -227,7 +228,9 @@ function adicionarFavorito(nome, preco) {
 
 // ============ BUSCA ============
 function buscarProduto() {
-  const raw = document.getElementById("searchInput").value;
+  const searchInput = document.getElementById("searchInput");
+  if (!searchInput) return;
+  const raw = searchInput.value;
   const termo = raw.trim().toLowerCase();
   const cards = document.querySelectorAll(".card");
 
@@ -689,7 +692,13 @@ function enviarAvaliacao() {
 }
 
 function aplicarEstrelas() {
-  const ultimaAvaliacao = JSON.parse(localStorage.getItem("ultimaAvaliacao"));
+  let ultimaAvaliacao = null;
+  try {
+    const raw = localStorage.getItem("ultimaAvaliacao");
+    if (raw) ultimaAvaliacao = JSON.parse(raw);
+  } catch (e) {
+    return;
+  }
   if (ultimaAvaliacao) {
     const stars = document.querySelectorAll(".star");
     stars.forEach((star, index) => {
@@ -719,7 +728,6 @@ function mostrarNotificacao(mensagem) {
 
 // ============ CARREGAR DADOS INICIAIS ============
 window.addEventListener("load", function () {
-  atualizarCarrinho();
   verificarStatusLoja();
   atualizarPontosFidelidade();
 });
